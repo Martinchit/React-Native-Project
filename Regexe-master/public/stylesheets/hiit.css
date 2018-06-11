@@ -1,0 +1,115 @@
+body {
+    background: rgb(27, 27, 27)
+}
+
+.interval {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.interval > ul {
+    height: 40px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    bottom: 0;
+}
+.interval > ul > li {
+    height: 40px;
+    float: left;
+}
+
+.high-bg {
+    background-color: #AE213F;
+}
+.low-bg {
+    background-color: #E26B27;
+}
+
+.cooldown-bg {
+    background-color: #916488;
+}
+
+.warmup-bg {
+    background-color: #916488;
+}
+
+.finish-bg {
+    background-color: rgb(62, 204, 62);
+}
+
+.pointer{
+    position: absolute;
+    width: 3px;
+    height: 40px;
+    background-color: white;
+}
+
+
+.timer div.col-sm-4 {
+    padding: 0;
+}
+
+.timer button.play, .timer button.pause {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    font-size: 3vw;
+}
+
+.mstime { 
+    height: 70%;
+    font-size: 9vw;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.hide {
+    opacity: 0;
+    max-width: 0;
+}
+
+.input-form {
+    margin: 30px;
+    background: rgb(82, 95, 105);
+    padding: 15px 20px;
+    justify-content: center;
+}
+
+input[type=number]{
+    width: 100px;
+} 
+
+.input-form p {
+    margin-bottom: 3px;
+}
+
+.input-form .form-row {
+    margin: 5px;
+}
+
+.create {
+    margin-top: 20px;
+}
+
+.input-form {
+    text-align: center;
+}
+
+.timeRun {
+    font-size: 40px;
+}
+.timer {
+    text-align: center;
+    display: none;
+    width: 60%;
+    height: 40%;
+    margin: auto;
+}
+.timer p {
+    margin: 0;
+}
+.close-btn {
+    text-align: center;
+    margin-top: 50px;
+}

@@ -1,0 +1,117 @@
+- Description of a calories calulator 
+    http://www.exercise4weightloss.com/exercise-calorie-calculator.html
+
+- Formula
+    Total Calories Burned = Duration (in minutes) X (MET X 3.5 X weight in kg)/200
+
+- Basal Metabolic Rate (BMR)
+    https://www.builtlean.com/2010/03/14/how-to-calculate-your-calorie-burn/
+    BMR Men: = 66 + (6.23 X weight in pounds) + (12.7 X height in inches) – (6.8 X age)
+    BMR Women: = 655 + (4.35 X weight in pounds) + (4.7 X height in inches) – (4.7 X age)
+
+- What are calories?
+    https://www.healthstatus.com/calculate/cbc
+
+- Calories Burned by Occupation
+    https://www.fitnessblender.com/articles/calories-burned-by-occupation-how-many-calories-does-my-job-burn
+
+- Muscles group list
+    http://www.nutristrategy.com/weighttrain3.htm
+
+- Detail explanations on different training
+    https://www.exrx.net/WeightTraining/Instructions
+
+- Brunch of fitness calculators
+    https://www.bodybuilding.com/content/a-large-selection-of-easy-to-use-fitness-calculators.html
+
+- Food calories API
+    https://www.nutritionix.com/consumer
+
+- MET 2011 
+    http://download.lww.com/wolterskluwer_vitalstream_com/permalink/mss/a/mss_43_8_2011_06_13_ainsworth_202093_sdc1.pdf
+
+- HIIT 
+    https://gethealthyu.com/the-beginners-guide-to-hiit/
+    http://www.intervaltimer.com/timers/7942612-hiit-timer
+
+
+- Logged in user
+    - age, gender, w, h (basic user info)
+    - occupation and activity level
+    - !preferred muscles group (upper body/ back/ abdominal/ lower body)
+    - exercise type (aerobic/ muscle)
+    - goal weight, goal date
+
+
+- Casual user
+    - food name 
+    - weight 
+    - duration 
+    - exercise type -> basketball/ swimming/.... /exercise 
+    - !preferred muscles group 
+
+
+- List
+    - swimming
+    - running
+    - cycling
+    - rope-jumping
+    - exercise
+        - dumbell 
+        - squat 
+        - lunge 
+        - 
+
+- Tools 
+    1. food calories -> exercise/activity
+    2. Calculate Daily Calories
+    3. HIIT timer 
+
+
+- Present points
+    1. encourage people do exercise regularly
+    2.  i. visualize how many works u need to do after eating certain food
+        ii. knowing how many calories you should intake each day
+        iii. build lean muscle and drop fat
+
+
+
+
+
+
+                <div class="form-row">
+                  <div class="col">
+                    <label for="input-age">Age:</label>
+                    <input type="text" class="form-control form-control-sm" id="input-age">
+                  </div>
+                </div>
+                  <div class="col">
+                    <label for="inlineRadio1">Unit: </label>
+                    <div class="form-group radio-button">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="units" id="inlineRadio1" value="Imperial" checked="checked">
+                        <label class="form-check-label" for="inlineRadio1">Imperial</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="units" id="inlineRadio2" value="Metric">
+                        <label class="form-check-label" for="inlineRadio2">Metric</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row units">
+                  <div class="col">
+                    <label for="input-weight">Weight:</label>
+                    <input type="text" class="form-control" id="input-weight">
+                  </div>
+                  <div class="col">
+                    <p>lbs</p>
+                  </div>
+                  <div class="col">
+                    <label for="input-height">Height:</label>
+                    <input type="text" class="form-control" id="input-height">
+                  </div>
+                  <div class="col">
+                    <p>cm</p>
+                  </div>
+                </div>
