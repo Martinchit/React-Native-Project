@@ -46,78 +46,60 @@ class Exercise extends React.Component {
     }
 
     changeType = (item) => {
-        this.setState({type: item.name, selectedItem: item, content: item.content});
+        this.props.navigator.showModal({
+            screen: 'ExerciseContentScreen',
+            title: 'Add Exercise',
+            backButtonTitle: "Back",
+            passProps: {
+                cancel: this.cancel,
+                selectedItem: item,
+                type: this.state.type,
+                content: item.content,
+            }
+        });
     }
 
-    addLog = (itemId, weight, rep, set) => {
-        this.props.addLog([itemId, weight, rep, set]);
-        this.setState({type: null, selectedItem: null, content: null});
-    }
-
-    back = () => {
-        this.setState({type: null, selectedItem: null, content: null});
+    cancel = () => {
+        this.props.navigator.dismissModal();
     }
 
     _keyExtractor = (item, index) => item.id;
 
     render() {
         const buttons = (
-            <View style={{flex:1}} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
-            <View style={{flex: 1, justifyContent: 'space-around'}}>
-                {Data.map((item, idx) => {
-                    var path = idx ? require('../img/Chest.jpeg') : require('../img/Forearm.jpeg');
-                    return (
-                        <View key={item.id} style={{flex:1}}>
-                            <TouchableOpacity key={item.id} onPress={() => this.changeType(item)}>
-                            <View style={{alignItems: 'center'}}>
-                                <ImageOverlay
-                                    width={size.width}
-                                    height={this.state.height/2}
-                                    overlayAlpha={0.4}
-                                    source={path}
-                                    title={item.name}
-                                    titleStyle={styles.ExerciseWelcome}
-                                />
+            <View style={{flex: 1,}} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
+                <View style={{flex: 1, justifyContent: 'space-around'}}>
+                    {Data.map((item, idx) => {
+                        var path = idx ? require('../img/Chest.jpeg') : require('../img/Forearm.jpeg');
+                        return (
+                            <View key={item.id} style={{flex:1}}>
+                                <TouchableOpacity key={item.id} onPress={() => this.changeType(item)}>
+                                <View style={{alignItems: 'center'}}>
+                                    <ImageOverlay
+                                        width={size.width}
+                                        height={this.state.height/2}
+                                        overlayAlpha={0.4}
+                                        source={path}
+                                        title={item.name}
+                                        titleStyle={styles.ExerciseWelcome}
+                                    />
+                                </View>
+                                </TouchableOpacity>
                             </View>
-                            </TouchableOpacity>
-                        </View>
-                    )
-            })}
-              
+                        )
+                })}
+                
+                </View>
             </View>
-            </View>
-        )
-
-        const select = (
-            <ExerciseContent back={this.back} addLog={this.addLog} selectedItem={this.state.selectedItem} type={this.state.type} content={this.state.content} />
         )
 
         return (
             <View style={styles.ExerciseContainer}>
-                {this.state.type? select: buttons}       
+                {buttons}
             </View>
         );
     }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addLog: (itemId, weight, rep, set) => dispatch(actions.addLog(itemId, weight, rep, set))
-  }
-}
 
-
-export default connect(null, mapDispatchToProps)(Exercise);
-
-// <FlatList
-//                 data={Data}
-//                 keyExtractor={this._keyExtractor}
-//                 renderItem={(row) => (
-                    
-//                     <TouchableOpacity key={row.item.id} onPress={() => this.changeType(row.item)}>
-                        // <Text key={row.item.id} style={styles.ExerciseWelcome}>
-                        //         {row.item.name}
-                        // </Text>
-//                     </TouchableOpacity>
-//             )}>
-//             </FlatList>  
+export default Exercise;

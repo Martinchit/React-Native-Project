@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const addExerciseLog = (state, action) => {
-    return updateObject(state, {exerciseLog: state.exerciseLog.concat({itemId: action.exercise, weight: action.weight, repetition: action.repetition, set: action.set})});
+    return updateObject(state, {exerciseLog: state.exerciseLog.concat({exercise: action.exercise, weight: action.weight, repetition: action.repetition, set: action.set})});
 };
 
 const clearExerciseLog = (state, action) => {

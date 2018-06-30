@@ -8,6 +8,8 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider, connect } from "react-redux";
 import thunk from "redux-thunk";
 
+import { AccessToken } from 'react-native-fbsdk';
+
 import * as reducers from "./store/reducer/index";
 import * as appActions from "./store/actions/index";
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -51,14 +53,17 @@ class App extends React.Component {
           screen: 'ProfileScreen',
           icon: require('./img/Profile.png'),
           selectedIcon: require('./img/Profile.png'),
-          title: 'Profile',
-          navigatorStyle: {
-            navBarHidden: true
-          }
+          title: 'Profile'
         }
       ]
     });
-    // this.showModal();
+    AccessToken.getCurrentAccessToken().then((data) => {
+      if(!data) {
+        this.showModal();
+      } else {
+        this.dismissModal();
+      }
+    });
   }
   showModal() {
     Navigation.showModal({
@@ -71,9 +76,7 @@ class App extends React.Component {
     });
   }
   dismissModal() {
-    Navigation.dismissAllModals({
-      animationType: 'slide-down'
-    });
+    Navigation.dismissAllModals();
   }
 }
 

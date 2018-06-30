@@ -1,26 +1,75 @@
 import React from 'react';
-import { Text, View, Image,StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import Styles from '../Style/Style';
+// import Styles from '../Style/Style';
 import ActionSheet from 'react-native-actionsheet';
 
 class ExerciseHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      intro: 'ExerciseHistory'
+      height: null
     };
   }
 
   showActionSheet = () => {
-    this.ActionSheet.show();
+    this.ActionSheet.show()
+  }
+
+  handlePress = (buttonIndex) => {
+      if (buttonIndex) {
+        alert("Cancelled")
+      } else {
+        alert('Updated')
+      }
   }
 
   render() {
     return (
-      <View style={styles.container}>
-                
-            </View>
+      <View style={styles.container} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
+      <Text style={styles.welcome}>Exercise Log</Text>
+      <View style={styles.GridContainer}>
+          <View style={styles.bigGrid}>
+              <Text style={styles.gridText}>Name</Text>
+          </View>
+
+          <View style={styles.smallGrid}>
+              <View><Text style={styles.gridText}>Weight</Text></View>
+              <View><Text style={styles.gridText}>Rep</Text></View>
+              <View><Text style={styles.gridText}>Set</Text></View>
+          </View>
+      </View>
+        <ScrollView style={styles.cardContainer}>
+
+            {this.props.exerciseLog.map((e, idx) => {
+              return (
+                <TouchableOpacity key={idx} onPress={this.showActionSheet} >
+                    <View style={styles.cardHolder} key={idx} >
+
+                        <View style={styles.bigGrid}>
+                            <Text style={styles.gridText}> {e.exercise} </Text>
+                        </View>
+
+                        <View style={styles.smallGrid}>
+                            <View><Text style={styles.gridText}> {e.weight} </Text></View>
+                            <View><Text style={styles.gridText}> {e.repetition} </Text></View>
+                            <View><Text style={styles.gridText}> {e.set} </Text></View>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+              )
+            })}
+        </ScrollView>
+        
+        <ActionSheet
+            ref={o => this.ActionSheet = o}
+            title={'Favorite'}
+            options={['Add To Favorite', 'Cancel']}
+            cancelButtonIndex={1}
+            destructiveButtonIndex={1}
+            onPress={(idx) => this.handlePress(idx)}
+        />
+      </View>
     );
   }
 }
@@ -36,8 +85,8 @@ export default connect(mapStateToProps)(ExerciseHistory);
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      backgroundColor: '#F5FCFF',
+    flex: 1,
+    backgroundColor: '#F5FCFF',
   },
   welcome: {
       fontSize: 20,
@@ -74,7 +123,8 @@ const styles = StyleSheet.create({
   },
   gridText: {
       textAlign: 'center',
-      fontSize: 18,
+      fontSize: 16,
+      fontWeight: '600'
   },
   cardContainer: {
       flexDirection: 'column',
@@ -82,7 +132,7 @@ const styles = StyleSheet.create({
   },
   cardHolder: {
       flexDirection: 'row',
-      height: 40,
+      height: 45,
       position: 'relative',
       borderBottomWidth: 2,
       borderBottomColor: '#ededed',
@@ -90,19 +140,4 @@ const styles = StyleSheet.create({
       borderTopColor: '#ededed',
       marginBottom: 5,
   },
-  wrapper: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
-  },
-  button: {
-      width: 200,
-      marginBottom: 10,
-      paddingTop: 15,
-      paddingBottom: 15,
-      textAlign: 'center',
-      color: '#fff',
-      backgroundColor: '#38f'
-  }
-
 });

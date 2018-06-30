@@ -4,7 +4,8 @@ import { updateObject } from '../../shared/utility';
 const initialState = {
     loading: false,
     foods: [],
-    error: null
+    error: null,
+    showItemInfo: null
 };
 
 const checkFoodStart = (state, action) => {
@@ -12,7 +13,7 @@ const checkFoodStart = (state, action) => {
 };
 
 const checkFoodSuccess = (state, action) => {
-    return updateObject(state, {loading: false, foods: state.foods.concat(action.data)});
+    return updateObject(state, {loading: false, foods: state.foods.concat(action.data), showItemInfo: action.data});
 };
 
 const checkFoodFail = (state, action) => {

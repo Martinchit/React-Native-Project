@@ -17,7 +17,7 @@ class FBLoginButton extends React.Component {
       obj.userId = ref.id;
       obj.name = ref.name;
       obj.email = ref.email;
-      obj.profilePicture = "http://graph.facebook.com/" + ref.id + "/picture?type=large&width=720&height=720";
+      obj.profilePicture = "http://graph.facebook.com/" + ref.id + "/picture?type=large&width=160&height=160";
       this.props.authSuccess(obj);
     });
   }
@@ -25,7 +25,7 @@ class FBLoginButton extends React.Component {
   componentWillMount() {
     AccessToken.getCurrentAccessToken().then((data) => {
       if(data && !this.props.token) {
-        this.initUser(data.accessToken.toString())
+        this.initUser(data.accessToken.toString());
       }
     });
   }

@@ -13,12 +13,12 @@ export const removeLog = (id) => {
     };
 };
 
-export const addLog = (exercise, weight, repetitiion, set) => {
+export const addLog = (exercise, weight, repetition, set) => {
     return {
         type: actionTypes.ADD_EXERCISE_LOG,
         exercise: exercise,
         weight: weight,
-        repetitiion: repetitiion,
+        repetition: repetition,
         set: set
     };
 };

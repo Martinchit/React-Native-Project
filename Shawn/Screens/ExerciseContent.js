@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { TouchableOpacity, Platform, Text, View, FlatList, Picker, } from 'react-native';
+import { TouchableOpacity, Platform, Text, View, FlatList, Picker, Vibration } from 'react-native';
 import { Navigator } from 'react-native-navigation';
 import { connect } from 'react-redux';
 import Button from 'apsl-react-native-button';
 import Styles from '../Style/Style';
-
+import * as actions from '../store/actions/index';
 
 class ExerciseContent extends React.Component {
     constructor(props) {
@@ -24,7 +24,6 @@ class ExerciseContent extends React.Component {
                 <View style={Styles.ExerciseContentFirstPickerArea}>
                     <Text style={Styles.ExerciseContentWelcome}>{this.state.exerciseType} Exercise</Text>
                     <Picker
-                        
                         itemStyle={Styles.ExerciseContentTwoPickers}
                         selectedValue={this.state.itemId}
                         onValueChange={(val)=> {
@@ -101,16 +100,16 @@ class ExerciseContent extends React.Component {
                         style={Styles.ExerciseContentBackButton} 
                         textStyle={{fontSize: 18}} 
                         onPress={() => {
-                            this.props.back()
-                        }
-                    }
+                            this.props.cancel()
+                        }}
                     >
-                        <Text style={{color: 'white'}}>Back</Text>
+                        <Text style={{color: 'white'}}>Cancel</Text>
                     </Button>
                     <Button 
                         style={Styles.ExerciseContentCheckButton} 
                         textStyle={{fontSize: 18}} 
                         onPress={() => {
+                            Vibration.vibrate(1);
                             this.props.addLog(this.state.itemId, this.state.weight, this.state.repetition, this.state.set)
                         }}
                     >
@@ -122,4 +121,11 @@ class ExerciseContent extends React.Component {
     }
 }
 
-export default ExerciseContent;
+const mapDispatchToProps = dispatch => {
+    return {
+      addLog: (itemId, weight, rep, set) => dispatch(actions.addLog(itemId, weight, rep, set)),
+    }
+  }
+  
+
+export default connect(null, mapDispatchToProps)(ExerciseContent);

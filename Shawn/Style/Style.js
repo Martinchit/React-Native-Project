@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 const Styles = StyleSheet.create({
     core : {
         flex: 1, 
-        backgroundColor: 'white', 
-        justifyContent: 'center'
     },
     profileHeader: {
         textAlign: 'center',
@@ -12,11 +10,21 @@ const Styles = StyleSheet.create({
         color: 'navy',
         width: '100%'
     },
-    centerBtn: {
+    profileName: {
+        fontSize: 30,
+        marginBottom: 10,
+        fontWeight: '900',
+        color: '#EDEDED',
+        textAlign: 'center'
+    },
+    profileFacebookBtn: {
         textAlign: 'center',
-        color: 'white',
-        marginBottom: 5,
-        marginHorizontal: 'auto',
+        width: 30
+    },
+    profileFoodButton: {
+        fontSize: 24,
+        fontWeight: '800',
+        color: '#EDEDED'
     },
     content: {
         flex: 1,
@@ -38,8 +46,6 @@ const Styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '40%',
-        marginVertical: 100
     },
     backgroundImageViewBox: {
         position: 'absolute',
@@ -69,26 +75,18 @@ const Styles = StyleSheet.create({
     FoodInstructions: {
         fontSize: 30,
         marginTop: 130,
+        marginBottom: 10,
         fontWeight: '900',
         color: '#EDEDED',
     },
-    FoodNutritionList: {
-        top: 70,
-        borderWidth: 3,
-        borderColor: '#000080',
-        width: '100%',
-        height: '60%',
-        paddingHorizontal: 5,
-        paddingVertical: 3
+    FoodSmallPicker: {
+        width: 50,
+        height: 88,
+        color: '#EDEDED'
     },
-    FoodScrollView: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 2,
-        marginHorizontal: 2,
-        marginVertical: 5
+    FoodImage: {
+        height: 65, 
+        width: 65
     },
     ExerciseContentContainer: {
         flex: 1,
@@ -96,7 +94,6 @@ const Styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
     },
     ExerciseContentWelcome: {
         fontSize: 30,
