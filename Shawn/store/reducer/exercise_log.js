@@ -18,8 +18,6 @@ const removeExerciseLog = (state, action) => {
     return updateObject(state, {exerciseLog: exerciseLog});
 };
 
-
-
 const exerciseLogReducer = (state=initialState, action) => {
     switch(action.type) {
         case actionTypes.ADD_EXERCISE_LOG:

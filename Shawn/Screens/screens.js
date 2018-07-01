@@ -7,6 +7,8 @@ import FoodHistory from './FoodHistory';
 import Exercise from './Exercise';
 import ExerciseHistory from './ExerciseHistory';
 import ExerciseContent from './ExerciseContent';
+import FavoriteFoodList from './FavoriteFoodList';
+import FavoriteExerciseList from './FavoriteExerciseList';
 
 
 export default registerScreens = (store, provider) =>  {
@@ -18,4 +20,6 @@ export default registerScreens = (store, provider) =>  {
     Navigation.registerComponent('ExerciseScreen', () => Exercise, store, provider);
     Navigation.registerComponent('ExerciseHistoryScreen', () => ExerciseHistory, store, provider);
     Navigation.registerComponent('ExerciseContentScreen', () => ExerciseContent, store, provider);
+    Navigation.registerComponent('FavoriteFoodScreen', () => FavoriteFoodList, store, provider);
+    Navigation.registerComponent('FavoriteExerciseScreen', () => FavoriteExerciseList, store, provider);
 };

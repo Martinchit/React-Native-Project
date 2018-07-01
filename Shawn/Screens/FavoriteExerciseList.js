@@ -1,29 +1,27 @@
 import React from 'react';
-import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import ActionSheet from 'react-native-actionsheet';
-import * as actions from '../store/actions/favoriteList';
+import * as actions from '../store/actions/index';
 
-class ExerciseHistory extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      height: null,
-      exerciseInfo: null
-    };
-  }
+class FavoriteExerciseList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            exerciseId: null
+        }
+    }
 
-  showActionSheet = () => {
-    this.ActionSheet.show()
-  }
+    showActionSheet = () => {
+        this.ActionSheet.show()
+    }
 
-  handlePress = (buttonIndex) => {
-      if (buttonIndex) {
-        alert("Cancelled")
-      } else {
-        this.props.addFavoriteExercise(this.state.exerciseInfo);
-      }
-  }
+    handlePress = (buttonIndex) => {
+        if (!buttonIndex) {
+            this.props.removeFavoritedExercise(this.state.exerciseId);
+            this.forceUpdate();
+        }
+    }
 
   render() {
     return (
@@ -42,12 +40,12 @@ class ExerciseHistory extends React.Component {
       </View>
         <ScrollView style={styles.cardContainer}>
 
-            {this.props.exerciseLog.map((e, idx) => {
+            {this.props.favoritedExercises.map((e, idx) => {
               return (
-                <TouchableOpacity
+                <TouchableOpacity 
                     key={idx} 
                     onPress={() => {
-                        this.setState({exerciseInfo: e})
+                        this.setState({exerciseId: idx});
                         this.showActionSheet();
                     }}
                 >
@@ -70,8 +68,8 @@ class ExerciseHistory extends React.Component {
         
         <ActionSheet
             ref={o => this.ActionSheet = o}
-            title={'Favorite'}
-            options={['Add To Favorite', 'Cancel']}
+            title={'Remove Exercise'}
+            options={['Remove From Favorite List', 'Cancel']}
             cancelButtonIndex={1}
             destructiveButtonIndex={1}
             onPress={(idx) => this.handlePress(idx)}
@@ -83,17 +81,17 @@ class ExerciseHistory extends React.Component {
   
 const mapStateToProps = state => {
   return {
-    exerciseLog: state.exerciseLogReducer.exerciseLog
+    favoritedExercises: state.favoriteList.favoritedExercises
   }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        addFavoriteExercise: (exercise) => dispatch(actions.addFavoriteExercise(exercise))
+        removeFavoritedExercise: (exerciseId) => dispatch(actions.removeFavoritedExercise(exerciseId)) 
     }
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(ExerciseHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteExerciseList);
 
 
 const styles = StyleSheet.create({

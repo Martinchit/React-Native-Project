@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Styles from '../Style/Style';
 import ImageOverlay from "react-native-image-overlay";
 import { size } from '../shared/size';
+import { Navigator } from 'react-native-navigation';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -15,11 +16,19 @@ class Profile extends React.Component {
   }
 
   goFavoriteFood() {
-    alert('food')
+    this.props.navigator.push({
+      screen: 'FavoriteFoodScreen',
+      title: 'Favorite Foods',
+      backButtonTitle: "Back"
+    });
   }
 
   goFavoriteExercise() {
-    alert('exercise')
+    this.props.navigator.push({
+      screen: 'FavoriteExerciseScreen',
+      title: 'Favorite Exercises',
+      backButtonTitle: "Back"
+    });
   }
   
   render() {

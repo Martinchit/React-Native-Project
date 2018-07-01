@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { TouchableOpacity, Platform, Text, View, FlatList, Picker, Vibration } from 'react-native';
 import { Navigator } from 'react-native-navigation';
 import { connect } from 'react-redux';
@@ -125,7 +125,7 @@ const mapDispatchToProps = dispatch => {
     return {
       addLog: (itemId, weight, rep, set) => dispatch(actions.addLog(itemId, weight, rep, set)),
     }
-  }
+}
   
 
 export default connect(null, mapDispatchToProps)(ExerciseContent);

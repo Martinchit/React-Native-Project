@@ -54,7 +54,7 @@ class Home extends React.Component {
       this.props.navigator.setTitle({
         title: this.state.options[buttonIndex]
       });
-      this.callApi(this.state.options[buttonIndex].toLowerCase().replace(/\s/gi, '-'));
+      this.getFeed(this.state.options[buttonIndex].toLowerCase().replace(/\s/gi, '-'));
     }
   }
 
@@ -69,21 +69,10 @@ class Home extends React.Component {
       })
   }
 
-  callApi = (info) => {
-    axios.get('https://newsapi.org/v2/everything?sources=' + info +'&q=fitness&apiKey=e9e8d764eb2548fc9ae7a1f0a613c9f5')
-      .then((feed) => {
-        this.setState({ news: feed.data.articles})
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
   render() {
 
     return (
       <View style={{flex: 1}} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
-      <ScrollView>
         <View style={styles.container}>
           
 
@@ -92,7 +81,6 @@ class Home extends React.Component {
             <Swiper news={this.state.news} height={this.state.height}/>
           </View> : null}
         </View>
-      </ScrollView>
       <ActionSheet
               ref={o => this.ActionSheet = o}
               title={'News Source'}
