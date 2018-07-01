@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import ActionSheet from 'react-native-actionsheet';
 import * as actions from '../store/actions/index';
@@ -10,7 +10,7 @@ class FavoriteFoodList extends React.Component {
         rightButtons: [
           {
             id: 'clear',
-            icon: require('../img/History.png'),
+            icon: require('../img/Clear.png'),
             disableIconTint: true
           }
         ]
@@ -18,9 +18,29 @@ class FavoriteFoodList extends React.Component {
 
     constructor(props) {
         super(props);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.state = {
             foodId: null
         };
+    }
+
+    onNavigatorEvent(event) {
+        if (event.type == 'NavBarButtonPress') {
+            if (event.id == 'clear') {
+                Alert.alert(
+                    'Alert Title',
+                    'My Alert Msg',
+                    [
+                      {text: 'Yes', onPress: () => {
+                        this.props.clearList();
+                        this.forceUpdate();
+                      }},
+                      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    ],
+                    { cancelable: false }
+                  )
+            }
+        }
     }
 
     showActionSheet = () => {
@@ -103,7 +123,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeFavoritedFood: (id) => dispatch(actions.removeFavoritedFood(id))
+        removeFavoritedFood: (id) => dispatch(actions.removeFavoritedFood(id)),
+        clearList: () => dispatch(actions.clearFavoritedFoodList())
     }
 }
         

@@ -17,9 +17,7 @@ class FoodHistory extends React.Component {
   }
 
   handlePress = (buttonIndex) => {
-      if (buttonIndex) {
-        return;
-      } else {
+      if (!buttonIndex) {
         console.log(this.foodInfo)
         this.props.addFavoriteFood(this.state.foodInfo);
       }

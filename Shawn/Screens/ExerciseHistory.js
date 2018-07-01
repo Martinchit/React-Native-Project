@@ -18,9 +18,7 @@ class ExerciseHistory extends React.Component {
   }
 
   handlePress = (buttonIndex) => {
-      if (buttonIndex) {
-        alert("Cancelled")
-      } else {
+      if (!buttonIndex) {
         this.props.addFavoriteExercise(this.state.exerciseInfo);
       }
   }

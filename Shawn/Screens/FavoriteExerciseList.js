@@ -5,10 +5,39 @@ import ActionSheet from 'react-native-actionsheet';
 import * as actions from '../store/actions/index';
 
 class FavoriteExerciseList extends React.Component {
+    static navigatorButtons = {
+        rightButtons: [
+          {
+            id: 'clear1',
+            icon: require('../img/Clear.png'),
+            disableIconTint: true
+          }
+        ]
+    };
+
     constructor(props) {
         super(props);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.state = {
             exerciseId: null
+        }
+    }
+    onNavigatorEvent(event) {
+        if (event.type == 'NavBarButtonPress') {
+            if (event.id == 'clear1') {
+                Alert.alert(
+                    'Alert Title',
+                    'My Alert Msg',
+                    [
+                      {text: 'Yes', onPress: () => {
+                        this.props.clearList();
+                        this.forceUpdate();
+                      }},
+                      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                    ],
+                    { cancelable: false }
+                  )
+            }
         }
     }
 
@@ -22,6 +51,7 @@ class FavoriteExerciseList extends React.Component {
             this.forceUpdate();
         }
     }
+
 
   render() {
     return (
@@ -87,7 +117,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeFavoritedExercise: (exerciseId) => dispatch(actions.removeFavoritedExercise(exerciseId)) 
+        removeFavoritedExercise: (exerciseId) => dispatch(actions.removeFavoritedExercise(exerciseId)),
+        clearList: () => dispatch(actions.clearFavoritedExerciseList())
     }
 }
   
