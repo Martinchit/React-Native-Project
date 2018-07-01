@@ -51,10 +51,7 @@ class Home extends React.Component {
 
   handlePress = (buttonIndex) => {
     if(buttonIndex < this.state.options.length - 1) {
-      this.props.navigator.setTitle({
-        title: this.state.options[buttonIndex]
-      });
-      this.getFeed(this.state.options[buttonIndex].toLowerCase().replace(/\s/gi, '-'));
+      this.callApi(this.state.options[buttonIndex].toLowerCase().replace(/\s/gi, '-'), this.state.options[buttonIndex]);
     }
   }
 
@@ -62,6 +59,19 @@ class Home extends React.Component {
   getFeed() {
     axios.get('https://newsapi.org/v2/everything?sources=' + this.state.text +'&q=fitness&apiKey=e9e8d764eb2548fc9ae7a1f0a613c9f5&pageSize=5')
       .then((feed) => {
+        this.setState({news: feed.data.articles});
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  callApi(text, title) {
+    axios.get('https://newsapi.org/v2/everything?sources=' + text +'&q=fitness&apiKey=e9e8d764eb2548fc9ae7a1f0a613c9f5&pageSize=5')
+      .then((feed) => {
+        this.props.navigator.setTitle({
+          title: title
+        });
         this.setState({news: feed.data.articles});
       })
       .catch((err) => {
