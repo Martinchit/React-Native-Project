@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ActionSheet from 'react-native-actionsheet';
 import * as actions from '../store/actions/index';
 import { Navigator } from 'react-native-navigation';
+import Swipeout from 'react-native-swipeout';
 
 class FavoriteFoodList extends React.Component {
     static navigatorButtons = {
@@ -54,8 +55,12 @@ class FavoriteFoodList extends React.Component {
         }
     }
 
+    deleteFavoriteFood = (foodId) => {
+        this.props.removeFavoritedFood(foodId);
+        this.forceUpdate();
+    };
+
     render() {
-        console.log('render')
         return (
             <View style={styles.container} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
             <Text style={styles.welcome}>Favorite Foods</Text>
@@ -75,30 +80,48 @@ class FavoriteFoodList extends React.Component {
             <ScrollView style={styles.cardContainer}>
   
                 {this.props.favoritedFoods.map((ele, idx) => {
+
+                    let swipeoutBtns = [
+                        {
+                            text: 'Delete',
+                            onPress: () => {
+                                this.deleteFavoriteFood(idx)
+                            },
+                            type: 'delete',
+                            key:0,
+                        }
+                    ]
+
                     return (
-                        <TouchableOpacity
-                            key={idx} 
-                            onPress={() => {
-                                this.setState({foodId: idx})
-                                this.showActionSheet()
-                            }} 
+                        // <TouchableOpacity
+                        //     key={idx} 
+                        //     onPress={() => {
+                        //         this.setState({foodId: idx})
+                        //         this.showActionSheet()
+                        //     }} 
+                        // >
+                        <Swipeout right={swipeoutBtns}
+                            key={idx}
+                            autoClose={true}
+                            key={idx}
                         >
-                        <View style={styles.cardHolder} key={idx} >
-  
-                            <View style={styles.bigGrid}>
-                                <Text style={styles.gridText}> {ele.food.match(/\d/gi)} </Text>
-                                <Text style={styles.gridText}> {ele.food.match(/[a-zA-z]/gi).join('')[0].toUpperCase() + ele.food.match(/[a-zA-z]/gi).join('').slice(1)} </Text>
+                            <View style={styles.cardHolder} key={idx} >
+    
+                                <View style={styles.bigGrid}>
+                                    <Text style={styles.gridText}> {ele.food.match(/\d/gi)} </Text>
+                                    <Text style={styles.gridText}> {ele.food.match(/[a-zA-z]/gi).join('')[0].toUpperCase() + ele.food.match(/[a-zA-z]/gi).join('').slice(1)} </Text>
+                                </View>
+    
+                                <View style={styles.smallGrid}>
+                                    <View><Text style={styles.gridText}> {ele.calories.toFixed(2)} </Text></View>
+                                    <View><Text style={styles.gridText}> {ele.fat.toFixed(2)} </Text></View>
+                                    <View><Text style={styles.gridText}> {ele.carb.toFixed(2)} </Text></View>
+                                    <View><Text style={styles.gridText}> {ele.protein.toFixed(2)} </Text></View>
+                                </View>
                             </View>
-  
-                            <View style={styles.smallGrid}>
-                                <View><Text style={styles.gridText}> {ele.calories.toFixed(2)} </Text></View>
-                                <View><Text style={styles.gridText}> {ele.fat.toFixed(2)} </Text></View>
-                                <View><Text style={styles.gridText}> {ele.carb.toFixed(2)} </Text></View>
-                                <View><Text style={styles.gridText}> {ele.protein.toFixed(2)} </Text></View>
-                            </View>
-                     </View>
-                  </TouchableOpacity>
-                )
+                        </Swipeout>
+                //   </TouchableOpacity>
+                    )
               })}
             </ScrollView>
             <ActionSheet

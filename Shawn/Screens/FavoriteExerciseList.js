@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import ActionSheet from 'react-native-actionsheet';
 import * as actions from '../store/actions/index';
+import Swipeout from 'react-native-swipeout';
 
 class FavoriteExerciseList extends React.Component {
     static navigatorButtons = {
@@ -41,15 +41,9 @@ class FavoriteExerciseList extends React.Component {
         }
     }
 
-    showActionSheet = () => {
-        this.ActionSheet.show()
-    }
-
-    handlePress = (buttonIndex) => {
-        if (!buttonIndex) {
-            this.props.removeFavoritedExercise(this.state.exerciseId);
-            this.forceUpdate();
-        }
+    deleteFavoriteExercise = (exerciseId) => {
+        this.props.removeFavoritedExercise(exerciseId);
+        this.forceUpdate();
     }
 
 
@@ -69,41 +63,47 @@ class FavoriteExerciseList extends React.Component {
           </View>
       </View>
         <ScrollView style={styles.cardContainer}>
-
             {this.props.favoritedExercises.map((e, idx) => {
-              return (
-                <TouchableOpacity 
-                    key={idx} 
-                    onPress={() => {
-                        this.setState({exerciseId: idx});
-                        this.showActionSheet();
-                    }}
-                >
-                    <View style={styles.cardHolder} key={idx} >
+                let swipeoutBtns = [
+                    {
+                        text: 'Delete',
+                        onPress: () => {
+                            this.deleteFavoriteExercise(idx)
+                        },
+                        type: 'delete',
+                        key:0,
+                    }
+                ]
+                return (
+                    // <TouchableOpacity 
+                    //     key={idx} 
+                    //     onPress={() => {
+                    //         this.setState({exerciseId: idx});
+                    //         this.showActionSheet();
+                    //     }}
+                    // >
+                    <Swipeout right={swipeoutBtns}
+                        autoClose={true}
+                        key={idx}
+                        key={idx}
+                    >
+                        <View style={styles.cardHolder} key={idx} >
 
-                        <View style={styles.bigGrid}>
-                            <Text style={styles.gridText}> {e.exercise} </Text>
-                        </View>
+                            <View style={styles.bigGrid}>
+                                <Text style={styles.gridText}> {e.exercise} </Text>
+                            </View>
 
-                        <View style={styles.smallGrid}>
-                            <View><Text style={styles.gridText}> {e.weight} </Text></View>
-                            <View><Text style={styles.gridText}> {e.repetition} </Text></View>
-                            <View><Text style={styles.gridText}> {e.set} </Text></View>
+                            <View style={styles.smallGrid}>
+                                <View><Text style={styles.gridText}> {e.weight} </Text></View>
+                                <View><Text style={styles.gridText}> {e.repetition} </Text></View>
+                                <View><Text style={styles.gridText}> {e.set} </Text></View>
+                            </View>
                         </View>
-                    </View>
-                </TouchableOpacity>
-              )
+                    </Swipeout>
+                    // </TouchableOpacity>
+                )
             })}
         </ScrollView>
-        
-        <ActionSheet
-            ref={o => this.ActionSheet = o}
-            title={'Remove Exercise'}
-            options={['Remove From Favorite List', 'Cancel']}
-            cancelButtonIndex={1}
-            destructiveButtonIndex={1}
-            onPress={(idx) => this.handlePress(idx)}
-        />
       </View>
     );
   }
@@ -123,7 +123,6 @@ const mapDispatchToProps = dispatch => {
 }
   
 export default connect(mapStateToProps, mapDispatchToProps)(FavoriteExerciseList);
-
 
 const styles = StyleSheet.create({
   container: {

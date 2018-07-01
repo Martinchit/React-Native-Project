@@ -18,8 +18,7 @@ class FoodHistory extends React.Component {
 
   handlePress = (buttonIndex) => {
       if (!buttonIndex) {
-        console.log(this.foodInfo)
-        this.props.addFavoriteFood(this.state.foodInfo);
+        this.props.addFavoriteFood(this.state.foodInfo, this.props.userId);
       }
   }
 
@@ -76,7 +75,7 @@ class FoodHistory extends React.Component {
           options={['Add To Favorite', 'Cancel']}
           cancelButtonIndex={1}
           destructiveButtonIndex={1}
-          onPress={(idx, value) => this.handlePress(idx)}
+          onPress={(idx) => this.handlePress(idx)}
         />
       </View>
     );
@@ -86,13 +85,14 @@ class FoodHistory extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    foods: state.checkFoodReducer.foods
+    foods: state.checkFoodReducer.foods,
+    userId: state.authReducer.userId
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addFavoriteFood: (foodInfo) => dispatch(actions.addFavoriteFood(foodInfo))
+    addFavoriteFood: (foodInfo, userId) => dispatch(actions.addFavoriteFood(foodInfo, userId))
   }
 }
 

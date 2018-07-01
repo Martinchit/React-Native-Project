@@ -2,10 +2,29 @@ import * as actionTypes from './actionTypes';
 import axios from 'axios';
 import config from '../../Config/config';
 
-export const addFavoriteFood = (food) => {
+const sendRedux = (food) => {
     return {
         type: actionTypes.ADD_FAVORITE_FOOD,
         food: food
+    };
+};
+
+export const addFavoriteFood = (food, userId) => {
+    console.log(userId)
+    console.log(food)
+    let name = food.food.match(/[a-zA-z]/gi).join('')[0].toUpperCase() + food.food.match(/[a-zA-z]/gi).join('').slice(1)
+    let obj = {quantity: Number(food.food.match(/\d/gi)), name: name, user_id: userId, carb: food.carb, fats: food.fat, protein: food.protein, calories: food.calories};
+    return dispatch => {
+        dispatch(sendRedux(food));
+        axios({
+            method: 'POST',
+            url: 'https://www.regcise.com/api/fav-food',
+            data: obj
+        }).then((data)=>{
+            console.log(data);
+        }).catch((err) => {
+            console.log(err);
+        });
     };
 };
 
