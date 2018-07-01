@@ -3,6 +3,8 @@ import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity, Ale
 import { connect } from 'react-redux';
 import ActionSheet from 'react-native-actionsheet';
 import * as actions from '../store/actions/index';
+import Swipeout from 'react-native-swipeout';
+
 
 class FavoriteExerciseList extends React.Component {
     static navigatorButtons = {
@@ -45,8 +47,8 @@ class FavoriteExerciseList extends React.Component {
         this.ActionSheet.show()
     }
 
-    handlePress = (buttonIndex) => {
-        if (!buttonIndex) {
+    handlePress = (idx) => {
+        if (!idx) {
             this.props.removeFavoritedExercise(this.state.exerciseId);
             this.forceUpdate();
         }
@@ -69,17 +71,26 @@ class FavoriteExerciseList extends React.Component {
           </View>
       </View>
         <ScrollView style={styles.cardContainer}>
+        
 
             {this.props.favoritedExercises.map((e, idx) => {
+                let swipeoutBtns = [
+                    {
+                      text: 'delete',
+                      onPress: () => this.handlePress(),
+                      type: 'delete',
+                      key:0,
+                    },
+                  ]
               return (
-                <TouchableOpacity 
-                    key={idx} 
-                    onPress={() => {
-                        this.setState({exerciseId: idx});
-                        this.showActionSheet();
-                    }}
+                <Swipeout right={swipeoutBtns}
+          autoClose={true}
+          key={idx}
+          onOpen={() => {
+            this.setState({exerciseId: idx});
+        }}
                 >
-                    <View style={styles.cardHolder} key={idx} >
+                    <View style={styles.cardHolder}  >
 
                         <View style={styles.bigGrid}>
                             <Text style={styles.gridText}> {e.exercise} </Text>
@@ -91,7 +102,7 @@ class FavoriteExerciseList extends React.Component {
                             <View><Text style={styles.gridText}> {e.set} </Text></View>
                         </View>
                     </View>
-                </TouchableOpacity>
+                    </Swipeout>
               )
             })}
         </ScrollView>

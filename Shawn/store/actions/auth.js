@@ -7,7 +7,8 @@ export const authStart = () => {
 };
 
 export const authSuccess = (authData) => {
-    console.log(authData)
+    console.log(authData);
+    console.log(userId);
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: authData.token,
