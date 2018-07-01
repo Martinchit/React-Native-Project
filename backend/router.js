@@ -170,10 +170,61 @@ module.exports = (express, knex) => {
             let description = body
             // console.log(`this is title : ${title}, this is description: ${description}`)
             res.json(body.data.articles)
-        }).catch((err)=> {
+        }).catch((err) => {
             console.log(err)
         })
 
     });
+
+    router.post('/api/fav-food', (req, res) => {
+        knex('fb_food').insert({
+            name: this.props.checkFood,
+            quantity: this.props.checkFood,
+            carb: this.props.showItemInfo.carb,
+            fats: this.props.showItemInfo.fat,
+            protein: this.props.showItemInfo.protein,
+            calories: this.props.showItemInfo.calories,
+            user_id: req.user.id,
+        }).then((data) => { //.then() is for insert the result 
+            res.json(data);
+            console.log("good save");
+        }).catch((err) => {
+            console.log(err);
+        })
+    });
+
+    router.post('/api/fav-food', (req, res) => {
+        knex('fb_food').insert({
+            name: this.props.checkFood,
+            quantity: this.props.checkFood,
+            carb: this.props.showItemInfo.carb,
+            fats: this.props.showItemInfo.fat,
+            protein: this.props.showItemInfo.protein,
+            calories: this.props.showItemInfo.calories,
+            user_id: req.user.id,
+        }).then((data) => { //.then() is for insert the result 
+            res.json(data);
+            console.log("good save");
+        }).catch((err) => {
+            console.log(err);
+        })
+    });
+
+    router.post('/api/fav-workout', (req, res) => {
+        knex('fb_workout').insert({
+            name: this.props.checkFood,
+            weight: this.props.checkFood,
+            rep: this.props.showItemInfo.carb,
+            set: this.props.showItemInfo.fat,
+            user_id: req.user.id,
+        }).then((data) => { //.then() is for insert the result 
+            res.json(data);
+            console.log("good save");
+        }).catch((err) => {
+            console.log(err);
+        })
+    });
+
+
     return router;
 };
