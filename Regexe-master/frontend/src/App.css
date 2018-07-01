@@ -1,0 +1,274 @@
+body {
+  font: 14px "monospace", Helvetica, Arial, sans-serif;
+  background-color: #000000;
+  background-attachment: fixed;
+  background-size: cover;
+  color: #FFFFFF;
+}
+
+p {
+  letter-spacing: 2px;
+}
+
+.pre-loginbox {
+  margin-top: 15vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.navbar {
+  background-color: rgba(255, 255, 255, 0.3);
+  height: 55px;
+}
+
+.brand-icon {
+  height: 40px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: white;
+}
+
+.navbar-light .navbar-brand {
+  color: white;
+}
+
+.footer {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 15px 10px;
+}
+
+.profile-icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  margin: 10px 20px;
+}
+
+.info {
+  float: left;
+}
+
+.namecard {
+  display: flex;
+  border: solid 1px rgb(0, 0, 0);
+  margin: 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  padding: 5px;
+  box-shadow: 6px 6px 15px -2px rgb(34, 30, 34);
+  max-width: 85%;
+  background: linear-gradient(to bottom, rgb(92, 92, 92) 49%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 51%);
+}
+
+.namecard:hover {
+  background: linear-gradient(to bottom, rgb(139, 0, 0) 49%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 51%);
+}
+
+p.name {
+  font-weight: 800;
+  font-size: 16px;
+  margin: 10px 5px;
+  color: white;
+}
+
+p.title {
+  margin: 10px 5px;
+  color: black;
+}
+
+.panel {
+  background-color: rgba(163, 163, 163, 0.555);
+  border-radius: 15px;
+  padding: 20px 30px;
+  width: 60%;
+  margin-bottom: 7rem;
+}
+
+.head-name {
+  font-family: monospace;
+  font-weight: 800;
+  font-size: 4vw;
+  transition: transform .5s ease-in-out;
+}
+
+.head-content {
+  font-family: monospace;
+  font-weight: 300;
+  font-size: 2vw;
+  letter-spacing: -1px;
+  color: darkred;
+}
+
+@media screen and (min-width: 1030px) {
+  .head-content {
+    font-size: 25px;
+  }
+  .head-name {
+    font-size: 45px;
+  }
+}
+
+.panel img {
+  height: 7vw;
+}
+
+.panel img {
+  transition: transform .5s ease-in-out;
+}
+
+.panel img:hover {
+  transform: rotate(180deg);
+}
+
+.col-1 {
+  margin-top: 35px;
+}
+
+.form-group.radio-button {
+  margin: 8px 8px 0 8px;
+}
+
+.disclaimer {
+  color: rgb(219, 219, 219);
+}
+
+img.index-image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  min-width: 93%;
+}
+
+.hover-effect:hover .index-image {
+  opacity: 0.3;
+}
+
+.hover-effect:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: rgb(95, 10, 91, 0.7);
+  color: white;
+  font-size: 14px;
+  padding: 20px;
+}
+
+.purple {
+  background: rgba(174, 33, 63);
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0px 14px 13px -8px rgba(50, 29, 50, 0.6);
+}
+
+hr {
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 30vw;
+  height: 1px;
+}
+
+h2 {
+  margin-top: 1.5rem;
+  font-weight: 800;
+  font-family: monospace;
+  color: darkred;
+}
+
+.center-text>p {
+  padding: 1vw;
+}
+
+.margin {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.tool img {
+  width: 150px;
+  height: 150px;
+  margin: auto;
+}
+
+.login-btn>img {
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.login-form {
+  text-align: left;
+  font: black;
+  margin: 0 auto;
+  width: 70%;
+}
+
+.login-form a {
+  margin-left: 5%;
+}
+
+.login-form .nav-tabs {
+  border: none;
+}
+
+.login-form .nav-tabs .nav-link {
+  border: none;
+  color: #495057;
+  border-radius: 3px;
+}
+
+.login-form .nav-item {
+  background-color: white;
+}
+
+.login-form .nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  box-shadow: inset 0px 0px 6px 1px rgba(0, 0, 0, 0.49);
+  color: #25195c;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.login-form .nav {
+  justify-content: center;
+}
+
+#email {
+  margin-top: 1rem;
+}
+
+#email a {
+  background: white;
+  color: black;
+  font-size: 15px;
+  padding: 5px 10px;
+  border-radius: 3px
+}
+
+.container {
+  margin-bottom: 150px;
+}
+
+.tool-name {
+  font-size: 20px;
+  padding: 10px;
+}
