@@ -6,6 +6,16 @@ import * as actions from '../store/actions/index';
 import { Navigator } from 'react-native-navigation';
 
 class FavoriteFoodList extends React.Component {
+    static navigatorButtons = {
+        rightButtons: [
+          {
+            id: 'clear',
+            icon: require('../img/History.png'),
+            disableIconTint: true
+          }
+        ]
+    };
+
     constructor(props) {
         super(props);
         this.state = {
