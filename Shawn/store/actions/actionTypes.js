@@ -3,6 +3,9 @@ export const AUTH_SUCCESS = 'auth_success';
 export const AUTH_FAIL = 'auth_fail';
 export const AUTH_LOGOUT = 'auth_logout';
 
+export const GET_INITIAL_FOOD = 'get_initial_food';
+export const GET_INITIAL_EXERCISE = 'get_intital_exercise';
+
 export const ADD_EXERCISE_LOG = 'add_exercise_log';
 export const CLEAR_EXERCISE_LOG = 'clear_exercise_log';
 export const REMOVE_EXERCISE_LOG = 'remove_exercise_log';

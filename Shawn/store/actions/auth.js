@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import axios from 'axios';
 
 export const authStart = () => {
     return {
@@ -6,7 +7,7 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (authData) => {
+const storeAuth = (authData) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: authData.token,
@@ -14,6 +15,33 @@ export const authSuccess = (authData) => {
         name: authData.name,
         profilePicture: authData.profilePicture,
         email: authData.email
+    };
+};
+
+const storeInitialFood = (foods) => {
+    return {
+        type: actionTypes.GET_INITIAL_FOOD,
+        foods: foods
+    };
+};
+
+const storeInitialWorkout = (exercises) => {
+    return {
+        type: actionTypes.GET_INITIAL_EXERCISE,
+        exercises: exercises
+    };
+};
+
+export const authSuccess = (authData) => {
+    return async dispatch => {
+        dispatch(storeAuth(authData));
+        axios.get(`https://www.regcise.com/api/get-fav-food/${authData.userId}`).then((data) => {
+            console.log(data)
+            dispatch(storeInitialFood(data.data));
+            axios.get(`https://www.regcise.com/api/get-fav-workout/${authData.userId}`).then((data) => {
+                dispatch(storeInitialWorkout(data.data));
+            });
+        });
     };
 };
 

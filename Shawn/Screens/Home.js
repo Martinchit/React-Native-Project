@@ -26,7 +26,7 @@ class Home extends React.Component {
       text: 'cnn',
       news: null,
       height: null,
-      options: ['CNN', 'BBC News', 'ESPN', 'Daily Mail', 'The Sports Bible', 'Cancel']
+      options: ['CNN', 'BBC News', 'Daily Mail', 'The Sports Bible', 'Cancel']
     };
   }
 

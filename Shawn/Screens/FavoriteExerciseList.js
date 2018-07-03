@@ -63,7 +63,7 @@ class FavoriteExerciseList extends React.Component {
           </View>
       </View>
         <ScrollView style={styles.cardContainer}>
-            {this.props.favoritedExercises.map((e, idx) => {
+            {this.props.favoritedExercises.map(ele => JSON.stringify(ele)).filter((ele, idx, arr) => idx === arr.lastIndexOf(ele)).map(ele => JSON.parse(ele)).map((e, idx) => {
                 let swipeoutBtns = [
                     {
                         text: 'Delete',
@@ -86,16 +86,23 @@ class FavoriteExerciseList extends React.Component {
                         autoClose={true}
                         key={idx}
                         key={idx}
+                        style={{
+                            backgroundColor: '#F5FCFF',
+                            borderBottomWidth: 2,
+                            borderBottomColor: '#ededed',
+                            borderTopWidth: 2,
+                            borderTopColor: '#ededed',
+                        }}
                     >
                         <View style={styles.cardHolder} key={idx} >
 
                             <View style={styles.bigGrid}>
-                                <Text style={styles.gridText}> {e.exercise} </Text>
+                                <Text style={styles.gridText}> {e.name} </Text>
                             </View>
 
                             <View style={styles.smallGrid}>
-                                <View><Text style={styles.gridText}> {e.weight} </Text></View>
-                                <View><Text style={styles.gridText}> {e.repetition} </Text></View>
+                                <View><Text style={styles.gridText}> {e.weight.match(/\d+(\.5)?/gi)[0]} </Text></View>
+                                <View><Text style={styles.gridText}> {e.rep} </Text></View>
                                 <View><Text style={styles.gridText}> {e.set} </Text></View>
                             </View>
                         </View>
@@ -173,12 +180,9 @@ const styles = StyleSheet.create({
   },
   cardHolder: {
       flexDirection: 'row',
-      height: 45,
+      height: 50,
       position: 'relative',
-      borderBottomWidth: 2,
-      borderBottomColor: '#ededed',
-      borderTopWidth: 2,
-      borderTopColor: '#ededed',
       marginBottom: 5,
+      alignItems: 'center'
   },
 });

@@ -79,7 +79,7 @@ class FavoriteFoodList extends React.Component {
             </View>
             <ScrollView style={styles.cardContainer}>
   
-                {this.props.favoritedFoods.map((ele, idx) => {
+                {this.props.favoritedFoods.map(ele => JSON.stringify(ele)).filter((ele, idx, arr) => idx === arr.lastIndexOf(ele)).map(ele => JSON.parse(ele)).map((ele, idx) => {
 
                     let swipeoutBtns = [
                         {
@@ -104,19 +104,26 @@ class FavoriteFoodList extends React.Component {
                             key={idx}
                             autoClose={true}
                             key={idx}
+                            style={{
+                                backgroundColor: '#F5FCFF',
+                                borderBottomWidth: 2,
+                                borderBottomColor: '#ededed',
+                                borderTopWidth: 2,
+                                borderTopColor: '#ededed',
+                            }}
                         >
                             <View style={styles.cardHolder} key={idx} >
     
                                 <View style={styles.bigGrid}>
-                                    <Text style={styles.gridText}> {ele.food.match(/\d/gi)} </Text>
-                                    <Text style={styles.gridText}> {ele.food.match(/[a-zA-z]/gi).join('')[0].toUpperCase() + ele.food.match(/[a-zA-z]/gi).join('').slice(1)} </Text>
+                                    <Text style={styles.gridText}> {ele.quantity} </Text>
+                                    <Text style={styles.gridText}> {ele.name} </Text>
                                 </View>
     
                                 <View style={styles.smallGrid}>
-                                    <View><Text style={styles.gridText}> {ele.calories.toFixed(2)} </Text></View>
-                                    <View><Text style={styles.gridText}> {ele.fat.toFixed(2)} </Text></View>
-                                    <View><Text style={styles.gridText}> {ele.carb.toFixed(2)} </Text></View>
-                                    <View><Text style={styles.gridText}> {ele.protein.toFixed(2)} </Text></View>
+                                    <View><Text style={styles.gridText}> {ele.calories} </Text></View>
+                                    <View><Text style={styles.gridText}> {ele.fats} </Text></View>
+                                    <View><Text style={styles.gridText}> {ele.carb} </Text></View>
+                                    <View><Text style={styles.gridText}> {ele.protein} </Text></View>
                                 </View>
                             </View>
                         </Swipeout>
@@ -205,12 +212,9 @@ const styles = StyleSheet.create({
     },
     cardHolder: {
         flexDirection: 'row',
-        height: 45,
+        height: 50,
         position: 'relative',
-        borderBottomWidth: 2,
-        borderBottomColor: '#ededed',
-        borderTopWidth: 2,
-        borderTopColor: '#ededed',
         marginBottom: 5,
+        alignItems: 'center'
     },
 });

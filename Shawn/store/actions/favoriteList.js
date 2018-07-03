@@ -2,20 +2,18 @@ import * as actionTypes from './actionTypes';
 import axios from 'axios';
 import config from '../../Config/config';
 
-const sendRedux = (food) => {
+const sendFoodRedux = (food) => {
     return {
         type: actionTypes.ADD_FAVORITE_FOOD,
         food: food
     };
 };
 
-export const addFavoriteFood = (food, userId) => {
-    console.log(userId)
-    console.log(food)
-    let name = food.food.match(/[a-zA-z]/gi).join('')[0].toUpperCase() + food.food.match(/[a-zA-z]/gi).join('').slice(1)
-    let obj = {quantity: Number(food.food.match(/\d/gi)), name: name, user_id: userId, carb: food.carb, fats: food.fat, protein: food.protein, calories: food.calories};
+export const addFavoriteFood = (foodInfo, userId) => {
+    let name = foodInfo.food.match(/[a-zA-z]/gi).join('')[0].toUpperCase() + foodInfo.food.match(/[a-zA-z]/gi).join('').slice(1)
+    let obj = {quantity: Number(foodInfo.food.match(/\d/gi)), name: name, user_id: userId, carb: foodInfo.carb, fats: foodInfo.fat, protein: foodInfo.protein, calories: foodInfo.calories};
     return dispatch => {
-        dispatch(sendRedux(food));
+        dispatch(sendFoodRedux(obj));
         axios({
             method: 'POST',
             url: 'https://www.regcise.com/api/fav-food',
@@ -28,10 +26,26 @@ export const addFavoriteFood = (food, userId) => {
     };
 };
 
-export const addFavoriteExercise = (exercise) => {
+const sendExerciseRedux = (exercise) => {
     return {
         type: actionTypes.ADD_FAVORITE_EXERCISE,
         exercise: exercise
+    };
+};
+
+export const addFavoriteExercise = (exercise, userId) => {
+    let obj = {name: exercise.exercise, weight: exercise.weight, rep: exercise.repetition, set: exercise.set, user_id: userId};
+    return dispatch => {
+        dispatch(sendExerciseRedux(obj));
+        axios({
+            method: 'POST',
+            url: 'https://www.regcise.com/api/fav-workout',
+            data: obj
+        }).then((data)=>{
+            console.log(data);
+        }).catch((err) => {
+            console.log(err);
+        });
     };
 };
 

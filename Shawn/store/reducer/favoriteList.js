@@ -6,6 +6,14 @@ const initialState = {
     favoritedExercises: []
 }
 
+const getInitialFavoriteFood = (state, action) => {
+    return updateObject(state, {favoritedFoods: action.foods});
+};
+
+const getInitialFavoriteExercise = (state, action) => {
+    return updateObject(state, {favoritedExercises: action.exercises});
+};
+
 const addFavoriteFood = (state, action) => {
     return updateObject(state, {favoritedFoods: state.favoritedFoods.concat(action.food)});
 };
@@ -36,6 +44,10 @@ const clearFavoriteExercise = (state, action) => {
 
 const favoriteListReducer = (state=initialState, action) => {
     switch(action.type) {
+        case actionTypes.GET_INITIAL_FOOD:
+            return getInitialFavoriteFood(state, action);
+        case actionTypes.GET_INITIAL_EXERCISE:
+            return getInitialFavoriteExercise(state, action);
         case actionTypes.ADD_FAVORITE_FOOD:
             return addFavoriteFood(state, action);
         case actionTypes.ADD_FAVORITE_EXERCISE:

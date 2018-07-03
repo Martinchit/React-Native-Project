@@ -19,7 +19,7 @@ class ExerciseHistory extends React.Component {
 
   handlePress = (buttonIndex) => {
       if (!buttonIndex) {
-        this.props.addFavoriteExercise(this.state.exerciseInfo);
+        this.props.addFavoriteExercise(this.state.exerciseInfo, this.props.userId);
       }
   }
 
@@ -81,13 +81,14 @@ class ExerciseHistory extends React.Component {
   
 const mapStateToProps = state => {
   return {
-    exerciseLog: state.exerciseLogReducer.exerciseLog
+    exerciseLog: state.exerciseLogReducer.exerciseLog,
+    userId: state.authReducer.userId
   }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        addFavoriteExercise: (exercise) => dispatch(actions.addFavoriteExercise(exercise))
+        addFavoriteExercise: (exercise, userId) => dispatch(actions.addFavoriteExercise(exercise, userId))
     }
 }
   
