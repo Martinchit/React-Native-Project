@@ -49,28 +49,58 @@ export const addFavoriteExercise = (exercise, userId) => {
     };
 };
 
-export const removeFavoritedFood = (foodId) => {
+const removeFavoritedFoodFromRedux = foodId => {
     return {
         type: actionTypes.REMOVE_FAVORITE_FOOD,
         id: foodId
     };
+}
+
+export const removeFavoritedFood = (foodInfo, foodId, userId) => {
+    return dispatch => {
+        dispatch(removeFavoritedFoodFromRedux(foodId));
+        axios.post(`https://www.regcise.com/api/del-fav-food/${userId}`, foodInfo);
+    };
 };
 
-export const removeFavoritedExercise = (exerciseId) => {
+const removeFavoritedExerciseFromRedux = (exerciseId) => {
     return {
         type: actionTypes.REMOVE_FAVORITE_EXERCISE,
         id: exerciseId
     };
 };
 
-export const clearFavoritedFoodList = () => {
+export const removeFavoritedExercise = (exerciseInfo, exerciseId, userId) => {
+    return dispatch => {
+        dispatch(removeFavoritedExerciseFromRedux(exerciseId));
+        let obj = exerciseInfo;
+        obj.weight = Number(exerciseInfo.weight.match(/\d+(\.5)?/gi)[0]);
+        axios.post(`https://www.regcise.com/api/del-fav-workout/${userId}`, obj);
+    };
+};
+
+const clearReduxFavoritedFoodList = () => {
     return {
         type: actionTypes.CLEAR_FAVORITE_FOOD_LIST
     };
 };
 
-export const clearFavoritedExerciseList = () => {
+export const clearFavoritedFoodList = (userId) => {
+    return dispatch => {
+        dispatch(clearReduxFavoritedFoodList());
+        axios.post('https://www.regcise.com/api/clear-food', {user_id: userId});
+    };
+};
+
+const clearReduxFavoritedExerciseList = () => {
     return {
         type: actionTypes.CLEAR_FAVORITE_EXERCISE_LIST
+    };
+};
+
+export const clearFavoritedExerciseList = (userId) => {
+    return dispatch => {
+        dispatch(clearReduxFavoritedExerciseList());
+        axios.post('https://www.regcise.com/api/clear-workout', {user_id: userId});
     };
 };

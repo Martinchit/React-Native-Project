@@ -26,11 +26,11 @@ class FavoriteExerciseList extends React.Component {
         if (event.type == 'NavBarButtonPress') {
             if (event.id == 'clear1') {
                 Alert.alert(
-                    'Alert Title',
-                    'My Alert Msg',
+                    'Alert',
+                    'Are you sure to clear this favorite list?',
                     [
                       {text: 'Yes', onPress: () => {
-                        this.props.clearList();
+                        this.props.clearList(this.props.userId);
                         this.forceUpdate();
                       }},
                       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
@@ -41,8 +41,8 @@ class FavoriteExerciseList extends React.Component {
         }
     }
 
-    deleteFavoriteExercise = (exerciseId) => {
-        this.props.removeFavoritedExercise(exerciseId);
+    deleteFavoriteExercise = (exerciseInfo, exerciseId, userId) => {
+        this.props.removeFavoritedExercise(exerciseInfo, exerciseId, userId);
         this.forceUpdate();
     }
 
@@ -63,25 +63,18 @@ class FavoriteExerciseList extends React.Component {
           </View>
       </View>
         <ScrollView style={styles.cardContainer}>
-            {this.props.favoritedExercises.map(ele => JSON.stringify(ele)).filter((ele, idx, arr) => idx === arr.lastIndexOf(ele)).map(ele => JSON.parse(ele)).map((e, idx) => {
+            {this.props.favoritedExercises.map((e, idx) => {
                 let swipeoutBtns = [
                     {
                         text: 'Delete',
                         onPress: () => {
-                            this.deleteFavoriteExercise(idx)
+                            this.deleteFavoriteExercise(e, idx, this.props.userId)
                         },
                         type: 'delete',
                         key:0,
                     }
                 ]
                 return (
-                    // <TouchableOpacity 
-                    //     key={idx} 
-                    //     onPress={() => {
-                    //         this.setState({exerciseId: idx});
-                    //         this.showActionSheet();
-                    //     }}
-                    // >
                     <Swipeout right={swipeoutBtns}
                         autoClose={true}
                         key={idx}
@@ -101,13 +94,12 @@ class FavoriteExerciseList extends React.Component {
                             </View>
 
                             <View style={styles.smallGrid}>
-                                <View><Text style={styles.gridText}> {e.weight.match(/\d+(\.5)?/gi)[0]} </Text></View>
+                                <View><Text style={styles.gridText}> {String(e.weight).match(/\d+(\.5)?/gi)[0]} </Text></View>
                                 <View><Text style={styles.gridText}> {e.rep} </Text></View>
                                 <View><Text style={styles.gridText}> {e.set} </Text></View>
                             </View>
                         </View>
                     </Swipeout>
-                    // </TouchableOpacity>
                 )
             })}
         </ScrollView>
@@ -118,14 +110,15 @@ class FavoriteExerciseList extends React.Component {
   
 const mapStateToProps = state => {
   return {
-    favoritedExercises: state.favoriteList.favoritedExercises
+    favoritedExercises: state.favoriteList.favoritedExercises,
+    userId: state.authReducer.userId
   }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeFavoritedExercise: (exerciseId) => dispatch(actions.removeFavoritedExercise(exerciseId)),
-        clearList: () => dispatch(actions.clearFavoritedExerciseList())
+        removeFavoritedExercise: (exerciseInfo, exerciseId, userId) => dispatch(actions.removeFavoritedExercise(exerciseInfo, exerciseId, userId)),
+        clearList: (userId) => dispatch(actions.clearFavoritedExerciseList(userId))
     }
 }
   

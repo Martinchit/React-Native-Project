@@ -29,11 +29,11 @@ class FavoriteFoodList extends React.Component {
         if (event.type == 'NavBarButtonPress') {
             if (event.id == 'clear') {
                 Alert.alert(
-                    'Alert Title',
-                    'My Alert Msg',
+                    'Alert',
+                    'Are you sure to clear this favorite list?',
                     [
                       {text: 'Yes', onPress: () => {
-                        this.props.clearList();
+                        this.props.clearList(this.props.userId);
                         this.forceUpdate();
                       }},
                       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
@@ -44,19 +44,8 @@ class FavoriteFoodList extends React.Component {
         }
     }
 
-    showActionSheet = () => {
-        this.ActionSheet.show()
-    }
-
-    handlePress = (buttonIndex) => {
-        if (!buttonIndex) {
-            this.props.removeFavoritedFood(this.state.foodId);
-            this.forceUpdate();
-        }
-    }
-
-    deleteFavoriteFood = (foodId) => {
-        this.props.removeFavoritedFood(foodId);
+    deleteFavoriteFood = (foodInfo, foodId, userId) => {
+        this.props.removeFavoritedFood(foodInfo, foodId, userId);
         this.forceUpdate();
     };
 
@@ -79,13 +68,13 @@ class FavoriteFoodList extends React.Component {
             </View>
             <ScrollView style={styles.cardContainer}>
   
-                {this.props.favoritedFoods.map(ele => JSON.stringify(ele)).filter((ele, idx, arr) => idx === arr.lastIndexOf(ele)).map(ele => JSON.parse(ele)).map((ele, idx) => {
+                {this.props.favoritedFoods.map((ele, idx) => {
 
                     let swipeoutBtns = [
                         {
                             text: 'Delete',
                             onPress: () => {
-                                this.deleteFavoriteFood(idx)
+                                this.deleteFavoriteFood(ele, idx, this.props.userId)
                             },
                             type: 'delete',
                             key:0,
@@ -93,13 +82,6 @@ class FavoriteFoodList extends React.Component {
                     ]
 
                     return (
-                        // <TouchableOpacity
-                        //     key={idx} 
-                        //     onPress={() => {
-                        //         this.setState({foodId: idx})
-                        //         this.showActionSheet()
-                        //     }} 
-                        // >
                         <Swipeout right={swipeoutBtns}
                             key={idx}
                             autoClose={true}
@@ -127,18 +109,9 @@ class FavoriteFoodList extends React.Component {
                                 </View>
                             </View>
                         </Swipeout>
-                //   </TouchableOpacity>
                     )
               })}
             </ScrollView>
-            <ActionSheet
-                ref={o => this.ActionSheet = o}
-                title={'Remove Food'}
-                options={['Remove From Favorite List', 'Cancel']}
-                cancelButtonIndex={1}
-                destructiveButtonIndex={1}
-                onPress={(idx) => this.handlePress(idx)}
-            />
         </View>
       );
     }
@@ -147,14 +120,15 @@ class FavoriteFoodList extends React.Component {
     
 const mapStateToProps = state => {
     return {
-        favoritedFoods: state.favoriteList.favoritedFoods
+        favoritedFoods: state.favoriteList.favoritedFoods,
+        userId: state.authReducer.userId
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeFavoritedFood: (id) => dispatch(actions.removeFavoritedFood(id)),
-        clearList: () => dispatch(actions.clearFavoritedFoodList())
+        removeFavoritedFood: (foodInfo, foodId, userId) => dispatch(actions.removeFavoritedFood(foodInfo, foodId, userId)),
+        clearList: (userId) => dispatch(actions.clearFavoritedFoodList(userId))
     }
 }
         

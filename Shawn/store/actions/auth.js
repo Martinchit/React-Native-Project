@@ -36,10 +36,9 @@ export const authSuccess = (authData) => {
     return async dispatch => {
         dispatch(storeAuth(authData));
         axios.get(`https://www.regcise.com/api/get-fav-food/${authData.userId}`).then((data) => {
-            console.log(data)
-            dispatch(storeInitialFood(data.data));
+            dispatch(storeInitialFood(data.data.map(ele => JSON.stringify(ele)).filter((ele, idx, arr) => idx === arr.lastIndexOf(ele)).map(ele => JSON.parse(ele))));
             axios.get(`https://www.regcise.com/api/get-fav-workout/${authData.userId}`).then((data) => {
-                dispatch(storeInitialWorkout(data.data));
+                dispatch(storeInitialWorkout(data.data.map(ele => JSON.stringify(ele)).filter((ele, idx, arr) => idx === arr.lastIndexOf(ele)).map(ele => JSON.parse(ele))));
             });
         });
     };
