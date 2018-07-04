@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, Picker, ScrollView, TouchableOpacity, ActionSheetIOS } from 'react-native';
 import { connect } from 'react-redux';
-import ActionSheet from 'react-native-actionsheet';
 import * as actions from '../store/actions/favoriteList';
 
 class ExerciseHistory extends React.Component {
@@ -13,14 +12,17 @@ class ExerciseHistory extends React.Component {
     };
   }
 
-  showActionSheet = () => {
-    this.ActionSheet.show()
-  }
-
-  handlePress = (buttonIndex) => {
-      if (!buttonIndex) {
-        this.props.addFavoriteExercise(this.state.exerciseInfo, this.props.userId);
-      }
+  showActionSheet() {
+    ActionSheetIOS.showActionSheetWithOptions({
+        options: ['Cancel', 'Add To Favorite'],
+        cancelButtonIndex: 0,
+        title: 'Favorite'
+    },
+    (buttonIndex) => {
+        if (buttonIndex === 1) { 
+            this.props.addFavoriteExercise(this.state.exerciseInfo, this.props.userId);
+         }
+    });
   }
 
   render() {
@@ -66,14 +68,7 @@ class ExerciseHistory extends React.Component {
             })}
         </ScrollView>
         
-        <ActionSheet
-            ref={o => this.ActionSheet = o}
-            title={'Favorite'}
-            options={['Add To Favorite', 'Cancel']}
-            cancelButtonIndex={1}
-            destructiveButtonIndex={1}
-            onPress={(idx) => this.handlePress(idx)}
-        />
+        
       </View>
     );
   }

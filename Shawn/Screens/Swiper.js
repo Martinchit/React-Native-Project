@@ -5,6 +5,36 @@ import ImageOverlay from "react-native-image-overlay";
 import Button from 'apsl-react-native-button';
 import { size } from '../shared/size';
 
+const Swiper = (props) => (
+    <View style={{height: props.height, width: size.width}}>
+    <SwipeableViews style={styles.slideContainer}>
+        {props.news.map((n, i) => (
+            <ImageOverlay
+                source={{ uri: n.urlToImage }}
+                height={props.height}
+                width={size.width}
+                key={i}
+                >                
+                <View style={{width: size.width, justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: 10}}>
+                    <Text style={styles.titleText}>{n.title}</Text>
+                </View>
+                <View style={{width: size.width, justifyContent: 'flex-start', alignItems: 'flex-end'}}>
+                    <Text style={styles.authorText}>{n.author}</Text>
+                </View>
+                <TouchableOpacity 
+                    style={{ flex: 1 , justifyContent:'flex-end',alignItems:'flex-end'}}
+                >
+                </TouchableOpacity>
+                <Button onPress={() => {Linking.openURL(n.url)}} style={{borderWidth: 0}} textStyle={{ fontSize: 22, color:'white', fontWeight: '900' }}>
+                    Read
+                </Button>
+            </ImageOverlay>
+        ))}
+    </SwipeableViews>
+    </View>
+);
+
+export default Swiper
 
 const styles = StyleSheet.create({
     slideContainer: {
@@ -41,34 +71,3 @@ const styles = StyleSheet.create({
         paddingRight: 5
     }
 });
-
-const Swiper = (props) => (
-    <View style={{height: props.height, width: size.width}}>
-    <SwipeableViews style={styles.slideContainer}>
-        {props.news.map((n, i) => (
-            <ImageOverlay
-                source={{ uri: n.urlToImage }}
-                height={props.height}
-                width={size.width}
-                key={i}
-                >                
-                <View style={{width: size.width, justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: 10}}>
-                    <Text style={styles.titleText}>{n.title}</Text>
-                </View>
-                <View style={{width: size.width, justifyContent: 'flex-start', alignItems: 'flex-end'}}>
-                    <Text style={styles.authorText}>{n.author}</Text>
-                </View>
-                <TouchableOpacity 
-                    style={{ flex: 1 , justifyContent:'flex-end',alignItems:'flex-end'}}
-                >
-                </TouchableOpacity>
-                <Button onPress={() => {Linking.openURL(n.url)}} style={{borderWidth: 0}} textStyle={{ fontSize: 22, color:'white', fontWeight: '900' }}>
-                    Read
-                </Button>
-            </ImageOverlay>
-        ))}
-    </SwipeableViews>
-    </View>
-);
-
-export default Swiper

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, Image,StyleSheet, Picker, ScrollView, Vibration, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/index';
 import Swipeout from 'react-native-swipeout';
@@ -8,7 +8,7 @@ class FavoriteExerciseList extends React.Component {
     static navigatorButtons = {
         rightButtons: [
           {
-            id: 'clear1',
+            id: 'clear',
             icon: require('../img/Clear.png'),
             disableIconTint: true
           }
@@ -24,7 +24,8 @@ class FavoriteExerciseList extends React.Component {
     }
     onNavigatorEvent(event) {
         if (event.type == 'NavBarButtonPress') {
-            if (event.id == 'clear1') {
+            if (event.id == 'clear') {
+                Vibration.vibrate(1);
                 Alert.alert(
                     'Alert',
                     'Are you sure to clear this favorite list?',
@@ -36,7 +37,7 @@ class FavoriteExerciseList extends React.Component {
                       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                     ],
                     { cancelable: false }
-                  )
+                )
             }
         }
     }

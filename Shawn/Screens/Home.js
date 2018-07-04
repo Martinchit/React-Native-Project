@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, ScrollView, TouchableHighlight, onLayout } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, ScrollView, TouchableHighlight, onLayout, ActionSheetIOS, Alert } from 'react-native';
 import FBLoginButton from '../Buttons/FBLoginButton';
 import { connect } from 'react-redux';
 import { Navigator } from 'react-native-navigation';
@@ -7,7 +7,6 @@ import { SuperGridSectionList, GridView } from 'react-native-super-grid';
 import axios from 'axios';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Swiper from './Swiper';
-import ActionSheet from 'react-native-actionsheet';
 
 class Home extends React.Component {
   static navigatorButtons = {
@@ -26,7 +25,7 @@ class Home extends React.Component {
       text: 'cnn',
       news: null,
       height: null,
-      options: ['CNN', 'BBC News', 'Daily Mail', 'The Sports Bible', 'Cancel']
+      options: ['Cancel', 'CNN', 'BBC News', 'Daily Mail', 'The Sports Bible']
     };
   }
 
@@ -46,15 +45,17 @@ class Home extends React.Component {
   }
 
   showActionSheet = () => {
-    this.ActionSheet.show()
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: this.state.options,
+      cancelButtonIndex: 0,
+      title: 'News Source'
+    },
+    (buttonIndex) => {
+        if (buttonIndex > 0) { 
+          this.callApi(this.state.options[buttonIndex].toLowerCase().replace(/\s/gi, '-'), this.state.options[buttonIndex]);
+        }
+    });
   }
-
-  handlePress = (buttonIndex) => {
-    if(buttonIndex < this.state.options.length - 1) {
-      this.callApi(this.state.options[buttonIndex].toLowerCase().replace(/\s/gi, '-'), this.state.options[buttonIndex]);
-    }
-  }
-
 
   getFeed() {
     axios.get('https://newsapi.org/v2/everything?sources=' + this.state.text +'&q=fitness&apiKey=e9e8d764eb2548fc9ae7a1f0a613c9f5&pageSize=5')
@@ -63,6 +64,10 @@ class Home extends React.Component {
       })
       .catch((err) => {
         console.log(err)
+        Alert.alert(
+          'Loading Error',
+          'Please Select Again',
+        )
       })
   }
 
@@ -75,7 +80,7 @@ class Home extends React.Component {
         this.setState({news: feed.data.articles});
       })
       .catch((err) => {
-        console.log(err)
+        aler
       })
   }
 
@@ -91,18 +96,12 @@ class Home extends React.Component {
             <Swiper news={this.state.news} height={this.state.height}/>
           </View> : null}
         </View>
-      <ActionSheet
-              ref={o => this.ActionSheet = o}
-              title={'News Source'}
-              options={this.state.options}
-              cancelButtonIndex={this.state.options.length - 1}
-              destructiveButtonIndex={this.state.options.length - 1}
-              onPress={(idx) => this.handlePress(idx)}
-            />
       </View>
     );
   }
 }
+
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
@@ -118,113 +117,5 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-  },
-  contentContainer: {
-    height: 500,
-    paddingVertical: 100,
-    paddingLeft: 20,
-  },
-  textButton: {
-    color: 'deepskyblue',
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'deepskyblue',
-    margin: 2,
-  },
-
-  dropdown_1: {
-    flex: 1,
-    top: 32,
-    left: 8,
-  },
-  dropdown_2: {
-    alignSelf: 'flex-start',
-    width: 150,
-    marginTop: 32,
-    right: 8,
-    borderWidth: 0,
-    borderRadius: 3,
-    backgroundColor: 'cornflowerblue',
-  },
-  dropdown_2_text: {
-    marginVertical: 10,
-    marginHorizontal: 6,
-    fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
-    textAlignVertical: 'center',
-  },
-  dropdown_2_dropdown: {
-    width: 150,
-    height: 300,
-    borderColor: 'cornflowerblue',
-    borderWidth: 2,
-    borderRadius: 3,
-  },
-  dropdown_2_row: {
-    flexDirection: 'row',
-    height: 40,
-    alignItems: 'center',
-  },
-  dropdown_2_image: {
-    marginLeft: 4,
-    width: 30,
-    height: 30,
-  },
-  dropdown_2_row_text: {
-    marginHorizontal: 4,
-    fontSize: 16,
-    color: 'navy',
-    textAlignVertical: 'center',
-  },
-  dropdown_2_separator: {
-    height: 1,
-    backgroundColor: 'cornflowerblue',
-  },
-  dropdown_3: {
-    width: 150,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    borderRadius: 1,
-  },
-  dropdown_3_dropdownTextStyle: {
-    backgroundColor: '#000',
-    color: '#fff'
-  },
-  dropdown_3_dropdownTextHighlightStyle: {
-    backgroundColor: '#fff',
-    color: '#000'
-  },
-  dropdown_4: {
-    margin: 8,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    borderRadius: 1,
-  },
-  dropdown_4_dropdown: {
-    width: 100,
-  },
-  dropdown_5: {
-    margin: 8,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    borderRadius: 1,
-  },
-  dropdown_6: {
-    flex: 1,
-    left: 8,
-  },
-  dropdown_6_image: {
-    width: 40,
-    height: 40,
-  },
-  ModalPosition: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flex: 1,
-    borderWidth: 2,
-    borderColor: 'red'
-
   }
 });
-
-export default Home;

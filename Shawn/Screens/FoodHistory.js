@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, Picker, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, Picker, ScrollView, TouchableOpacity, ActionSheetIOS } from 'react-native';
 import { connect } from 'react-redux';
-import ActionSheet from 'react-native-actionsheet';
 import * as actions from '../store/actions/favoriteList';
 
 class FoodHistory extends React.Component {
@@ -12,14 +11,17 @@ class FoodHistory extends React.Component {
     };
   }
 
-  showActionSheet = () => {
-    this.ActionSheet.show()
-  }
-
-  handlePress = (buttonIndex) => {
-      if (!buttonIndex) {
-        this.props.addFavoriteFood(this.state.foodInfo, this.props.userId);
-      }
+  showActionSheet() {
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: ['Cancel', 'Add To Favorite'],
+      cancelButtonIndex: 0,
+      title: 'Favorite'
+    },
+    (buttonIndex) => {
+        if (buttonIndex === 1) { 
+          this.props.addFavoriteFood(this.state.foodInfo, this.props.userId);
+        }
+    });
   }
 
   render() {
@@ -69,14 +71,7 @@ class FoodHistory extends React.Component {
             })}
         </ScrollView>
         
-        <ActionSheet
-          ref={o => this.ActionSheet = o}
-          title={'Favorite'}
-          options={['Add To Favorite', 'Cancel']}
-          cancelButtonIndex={1}
-          destructiveButtonIndex={1}
-          onPress={(idx) => this.handlePress(idx)}
-        />
+        
       </View>
     );
   }

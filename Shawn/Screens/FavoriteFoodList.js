@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, Image,StyleSheet, Picker, ScrollView, TouchableOpacity, Alert, Vibration } from 'react-native';
 import { connect } from 'react-redux';
-import ActionSheet from 'react-native-actionsheet';
 import * as actions from '../store/actions/index';
 import { Navigator } from 'react-native-navigation';
 import Swipeout from 'react-native-swipeout';
@@ -28,6 +27,7 @@ class FavoriteFoodList extends React.Component {
     onNavigatorEvent(event) {
         if (event.type == 'NavBarButtonPress') {
             if (event.id == 'clear') {
+                Vibration.vibrate(1);
                 Alert.alert(
                     'Alert',
                     'Are you sure to clear this favorite list?',

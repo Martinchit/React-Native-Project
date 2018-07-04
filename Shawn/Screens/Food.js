@@ -53,7 +53,7 @@ class Food extends React.Component {
     const data = this.state.text[0].toUpperCase() + this.state.text.slice(1);
     const food = `${this.state.quantity} ${this.state.text}`;
     this.props.checkFood(food);
-    Vibration.vibrate(1)
+    Vibration.vibrate(1);
     this.setState({selectedItem: data, text: null, quantity: 1});
   }
 

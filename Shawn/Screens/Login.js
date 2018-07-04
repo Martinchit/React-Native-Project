@@ -23,7 +23,6 @@ class Login extends React.Component {
         </View>
       );
     }
-
 }
 
 export default Login;
