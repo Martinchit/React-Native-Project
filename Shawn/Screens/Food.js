@@ -123,19 +123,23 @@ class Food extends React.Component {
           <View style={{flex: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-around', width: size.width / 1.1, marginTop: 30}}>
             <View >
               <Image style={Styles.FoodImage} source={require('../img/Calories.png')}/>
+              <Text style={{marginTop: 10, color: '#EDEDED', fontWeight: '900', textAlign: 'center'}}>Calories</Text>
               <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.calories : null}</Text>
             </View>
             <View >
-            <Image style={Styles.FoodImage} source={require('../img/Fats.png')}/>
-            <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.fat : null}</Text>
+              <Image style={Styles.FoodImage} source={require('../img/Fats.png')}/>
+              <Text style={{marginTop: 10, color: '#EDEDED', fontWeight: '900', textAlign: 'center'}}>Fats</Text>
+              <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.fat : null}</Text>
             </View>
             <View >
-            <Image style={Styles.FoodImage} source={require('../img/Carbonhydrate.png')}/>
-            <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.carb : null}</Text>
+              <Image style={Styles.FoodImage} source={require('../img/Carbonhydrate.png')}/>
+              <Text style={{marginTop: 10, color: '#EDEDED', fontWeight: '900', textAlign: 'center'}}>Carbs</Text>
+              <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.carb : null}</Text>
             </View>
             <View >
-            <Image style={Styles.FoodImage} source={require('../img/Proteins.png')}/>
-            <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.protein : null}</Text>
+              <Image style={Styles.FoodImage} source={require('../img/Proteins.png')}/>
+              <Text style={{marginTop: 10, color: '#EDEDED', fontWeight: '900', textAlign: 'center'}}>Protein</Text>
+              <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.protein : null}</Text>
             </View>
         </View>
         </ImageOverlay>

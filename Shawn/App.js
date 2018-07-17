@@ -54,7 +54,7 @@ class App extends React.Component {
           icon: require('./img/Profile.png'),
           selectedIcon: require('./img/Profile.png'),
           title: 'Profile'
-        }
+        },
       ]
     });
     AccessToken.getCurrentAccessToken().then((data) => {

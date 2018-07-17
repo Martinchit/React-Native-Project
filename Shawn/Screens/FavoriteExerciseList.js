@@ -3,6 +3,7 @@ import { Text, View, Image,StyleSheet, Picker, ScrollView, Vibration, TouchableO
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/index';
 import Swipeout from 'react-native-swipeout';
+import * as AddCalendarEvent from 'react-native-add-calendar-event';
 
 class FavoriteExerciseList extends React.Component {
     static navigatorButtons = {
@@ -42,27 +43,27 @@ class FavoriteExerciseList extends React.Component {
         }
     }
 
-    deleteFavoriteExercise = (exerciseInfo, exerciseId, userId) => {
+    deleteFavoriteExercise(exerciseInfo, exerciseId, userId) {
         this.props.removeFavoritedExercise(exerciseInfo, exerciseId, userId);
         this.forceUpdate();
     }
 
 
-  render() {
+    render() {
     return (
-      <View style={styles.container} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
-      <Text style={styles.welcome}>Exercise Log</Text>
-      <View style={styles.GridContainer}>
-          <View style={styles.bigGrid}>
-              <Text style={styles.gridText}>Name</Text>
-          </View>
+        <View style={styles.container} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
+        <Text style={styles.welcome}>Exercise Log</Text>
+        <View style={styles.GridContainer}>
+            <View style={styles.bigGrid}>
+                <Text style={styles.gridText}>Name</Text>
+            </View>
 
-          <View style={styles.smallGrid}>
-              <View><Text style={styles.gridText}>Weight</Text></View>
-              <View><Text style={styles.gridText}>Rep</Text></View>
-              <View><Text style={styles.gridText}>Set</Text></View>
-          </View>
-      </View>
+            <View style={styles.smallGrid}>
+                <View><Text style={styles.gridText}>Weight</Text></View>
+                <View><Text style={styles.gridText}>Rep</Text></View>
+                <View><Text style={styles.gridText}>Set</Text></View>
+            </View>
+        </View>
         <ScrollView style={styles.cardContainer}>
             {this.props.favoritedExercises.map((e, idx) => {
                 let swipeoutBtns = [
@@ -73,7 +74,15 @@ class FavoriteExerciseList extends React.Component {
                         },
                         type: 'delete',
                         key:0,
-                    }
+                    },
+                    // {
+                    //     text: 'Schedule',
+                    //     onPress: () => {
+                    //         this.makeAppointment(e)
+                    //     },
+                    //     type: 'schedule',
+                    //     key:1,
+                    // },
                 ]
                 return (
                     <Swipeout right={swipeoutBtns}
