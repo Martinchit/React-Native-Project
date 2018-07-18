@@ -133,7 +133,7 @@ class Food extends React.Component {
             </View>
             <View >
               <Image style={Styles.FoodImage} source={require('../img/Carbonhydrate.png')}/>
-              <Text style={{marginTop: 10, color: '#EDEDED', fontWeight: '900', textAlign: 'center'}}>Carbs</Text>
+              <Text style={{marginTop: 10, color: '#EDEDED', fontWeight: '900', textAlign: 'center'}}>Carbsg</Text>
               <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.carb : null}</Text>
             </View>
             <View >
