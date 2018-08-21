@@ -1,14 +1,31 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert, AsyncStorage } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import 'whatwg-fetch';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/index';
-import { Navigation } from 'react-native-navigation';
+import { Navigatior } from 'react-native-navigation';
 
 class FBLoginButton extends React.Component {
 
-  initUser(token) {
+   async storeData(token) {
+    try {
+      await AsyncStorage.setItem('userId', token);
+    } catch (error) {
+      Alert.alert(error);
+    }
+  }
+
+  async removeData() {
+    try {
+      await AsyncStorage.removeItem('userId');
+    } catch (error) {
+      Alert.alert(error);
+    }
+  }
+
+  initUser = (token) => {
+    this.storeData(token)
     fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' + token)
     .then((response) => response.json())
     .then((ref) => {
@@ -21,8 +38,13 @@ class FBLoginButton extends React.Component {
       this.props.authSuccess(obj);
     });
   }
+  
+  logout = () => {
+    this.removeData();
+    this.props.logout();
+  }
 
-  componentWillMount() {
+  componentDidMount() {
     AccessToken.getCurrentAccessToken().then((data) => {
       if(data && !this.props.token) {
         this.initUser(data.accessToken.toString());
@@ -33,7 +55,6 @@ class FBLoginButton extends React.Component {
     return (
       <View>
         <LoginButton
-          readPermissions={["email"]}
           onPress = {this.props.authStart}
           onLoginFinished={
             (error, result) => {
@@ -43,6 +64,7 @@ class FBLoginButton extends React.Component {
               } else if (result.isCancelled) {
                 alert("Login was cancelled");
               } else {
+                this.props.startTabAppAction;
                 AccessToken.getCurrentAccessToken().then((data) => {
                     this.initUser(data.accessToken.toString())
                   }
@@ -50,7 +72,7 @@ class FBLoginButton extends React.Component {
               }
             }
           }
-          onLogoutFinished={this.props.logout} />
+          onLogoutFinished={() => this.props.logoutAction()} />
       </View>
     );
   }

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import FBLoginButton from '../Buttons/FBLoginButton';
 import { connect } from 'react-redux';
 import Styles from '../Style/Style';
 import ImageOverlay from "react-native-image-overlay";
-import { size } from '../shared/size';
-import { Navigator } from 'react-native-navigation';
+import * as actions from '../store/actions/index';
+import { startSigleApp } from '../shared/Navigator';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -13,6 +13,20 @@ class Profile extends React.Component {
     this.state = {
       height: null
     };
+  }
+
+  async removeData() {
+    try {
+      await AsyncStorage.removeItem('userId');
+    } catch (error) {
+      Alert.alert(error);
+    }
+  }
+
+  logoutAction = () => {
+    this.removeData();
+    this.props.logout();
+    startSigleApp();
   }
 
   goFavoriteFood() {
@@ -43,7 +57,7 @@ class Profile extends React.Component {
           > 
             <View style={{marginBottom: 30}}>
             <Text style={Styles.profileName}>{this.props.name}</Text>
-            <FBLoginButton style={Styles.profileFacebookBtn}/>
+            <FBLoginButton logoutAction={this.logoutAction} style={Styles.profileFacebookBtn}/>
             </View>
           </ImageOverlay>
           : <FBLoginButton style={Styles.profileFacebookBtn}/>
@@ -90,4 +104,10 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = dispatch => {
+  return {
+      logout: () => dispatch(actions.logout())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
-import { Platform, AppRegistry } from 'react-native';
+import { Platform, AppRegistry, Alert, AsyncStorage } from 'react-native';
 
 import registerScreens from './Screens/screens';
+import { startSigleApp, startTabApp } from './shared/Navigator';
 
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { Provider, connect } from "react-redux";
@@ -25,69 +26,15 @@ class App extends React.Component {
       this.showApp();
   }
   async showApp() {
-    await Navigation.startTabBasedApp({
-      tabs: [
-        {
-          label: 'Home',
-          screen: 'HomeScreen',
-          icon: require('./img/Home.png'),
-          selectedIcon: require('./img/Home.png'), 
-          title: 'Regcise',
-        },
-        {
-          label: 'Exercise',
-          screen: 'ExerciseScreen',
-          icon: require('./img/Exercise.png'),
-          selectedIcon: require('./img/Exercise.png'),
-          title: 'Exercise'
-        },
-        {
-          label: 'Diet',
-          screen: 'FoodScreen',
-          icon: require('./img/Food.png'),
-          selectedIcon: require('./img/Food.png'),
-          title: 'Diet',
-        },
-        {
-          label: 'Profile',
-          screen: 'ProfileScreen',
-          icon: require('./img/Profile.png'),
-          selectedIcon: require('./img/Profile.png'),
-          title: 'Profile'
-        },
-      ]
-    });
-    AccessToken.getCurrentAccessToken().then((data) => {
-      if(!data) {
-        this.showModal();
-      } else {
-        this.dismissModal();
-      }
-    });
+    const value = await AsyncStorage.getItem('userId');
+    if (value !== null) {
+      startTabApp();
+    } else {
+      startSigleApp();
+    }
   }
-  showModal() {
-    Navigation.showModal({
-      screen: 'LoginScreen',
-      title: 'Regular Exercise',
-      animationType: 'slide-up',
-      navigatorStyle: {
-        navBarHidden: true
-      }
-    });
-  }
-  dismissModal() {
-    Navigation.dismissAllModals();
-  }
-}
+};
 
 let Regcise = new App();
-
-store.subscribe(() => {
-  if (store.getState().authReducer.token) {
-    Regcise.dismissModal();
-  } else {
-    Regcise.showModal();
-  }
-});
 
 export default Regcise;

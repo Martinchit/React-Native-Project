@@ -141,7 +141,7 @@ class Food extends React.Component {
               <Text style={{marginTop: 10, color: '#EDEDED', fontWeight: '900', textAlign: 'center'}}>Protein</Text>
               <Text style={{textAlign: 'center', color: 'white', marginTop: 10, fontSize: 18, fontWeight: '700'}}>{this.props.showItemInfo? this.props.showItemInfo.protein : null}</Text>
             </View>
-        </View>
+          </View>
         </ImageOverlay>
       </View>
     );
