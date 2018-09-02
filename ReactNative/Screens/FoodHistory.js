@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, Picker, ScrollView, TouchableOpacity, ActionSheetIOS } from 'react-native';
+import { Text, View, Image, StyleSheet, ScrollView, TouchableOpacity, ActionSheetIOS, AlertIOS } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/favoriteList';
 
@@ -11,7 +11,23 @@ class FoodHistory extends React.Component {
     };
   }
 
-  showActionSheet() {
+  pressActionHandler(ele) {
+    if(this.props.userId) {
+      this.showActionSheet(ele);
+    } else {
+      this.promptLoginInfo()
+    }
+  }
+
+  promptLoginInfo() {
+    AlertIOS.alert(
+      'Login First',
+      'You can store the food nutrition information in your account!'
+    );
+  }
+
+  async showActionSheet(data) {
+    await  this.setState({foodInfo: data})
     ActionSheetIOS.showActionSheetWithOptions({
       options: ['Cancel', 'Add To Favorite'],
       cancelButtonIndex: 0,
@@ -48,8 +64,7 @@ class FoodHistory extends React.Component {
                 <TouchableOpacity 
                   key={idx}
                   onPress={() => {
-                    this.setState({foodInfo: ele})
-                    this.showActionSheet()
+                    this.pressActionHandler(ele)
                   }}
                 >
                     <View style={styles.cardHolder} key={idx} >

@@ -5,6 +5,7 @@ export const AUTH_LOGOUT = 'auth_logout';
 
 export const GET_INITIAL_FOOD = 'get_initial_food';
 export const GET_INITIAL_EXERCISE = 'get_intital_exercise';
+export const GET_INITIAL_EXERCISE_LOG = 'get_intital_exercise_log';
 
 export const ADD_EXERCISE_LOG = 'add_exercise_log';
 export const CLEAR_EXERCISE_LOG = 'clear_exercise_log';

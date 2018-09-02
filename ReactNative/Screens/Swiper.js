@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Linking, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native';
 import SwipeableViews from 'react-swipeable-views-native';
 import ImageOverlay from "react-native-image-overlay";
 import Button from 'apsl-react-native-button';

@@ -32,6 +32,13 @@ const storeInitialWorkout = (exercises) => {
     };
 };
 
+const storeInitialExerciseLog = (exerciseLog) => {
+    return {
+        type: actionTypes.GET_INITIAL_EXERCISE_LOG,
+        exerciseLog: exerciseLog
+    }
+}
+
 export const authSuccess = (authData) => {
     return async dispatch => {
         dispatch(storeAuth(authData));
@@ -41,6 +48,9 @@ export const authSuccess = (authData) => {
                 dispatch(storeInitialWorkout(data.data.map(ele => JSON.stringify(ele)).filter((ele, idx, arr) => idx === arr.lastIndexOf(ele)).map(ele => JSON.parse(ele))));
             });
         });
+
+        let exerciseLog = await axios.get('https://regcise.firebaseio.com/exerciseLog.json')
+        dispatch(storeInitialExerciseLog(Object.values(exerciseLog.data).filter((ele) => ele.userId === authData.userId)))
     };
 };
 

@@ -1,17 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native';
-import FBLoginButton from '../Buttons/FBLoginButton';
-import { connect } from 'react-redux';
-import { Navigator } from 'react-native-navigation';
-import ExerciseContent from './ExerciseContent';
+import { View, TouchableOpacity } from 'react-native';
 import styles from '../Style/Style';
-import * as actions from '../store/actions/index';
 import { Data } from '../Data/Data';
 import { size } from '../shared/size';
 import ImageOverlay from "react-native-image-overlay";
 
 class Exercise extends React.Component {
     static navigatorButtons = {
+        leftButtons: [
+            {
+                id: 'calendar',
+                icon: require('../img/Calendar.png'),
+                disableIconTint: true
+            }
+        ],
         rightButtons: [
             {
                 id: 'history',
@@ -39,6 +41,12 @@ class Exercise extends React.Component {
                 this.props.navigator.push({
                     screen: 'ExerciseHistoryScreen',
                     title: 'Search History',
+                    backButtonTitle: "Back"
+                });
+            } else if (event.id === 'calendar') {
+                this.props.navigator.push({
+                    screen: 'CalendarScreen',
+                    title: 'Workout Schedule',
                     backButtonTitle: "Back"
                 });
             }

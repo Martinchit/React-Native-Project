@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, Picker, ScrollView, TouchableOpacity, ActionSheetIOS } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity, ActionSheetIOS } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/favoriteList';
 
@@ -26,6 +26,7 @@ class ExerciseHistory extends React.Component {
   }
 
   render() {
+      console.log(this.props.exerciseLog)
     return (
       <View style={styles.container} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
       <Text style={styles.welcome}>Exercise Log</Text>

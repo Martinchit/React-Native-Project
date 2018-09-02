@@ -11,7 +11,7 @@ const sendFoodRedux = (food) => {
 
 export const addFavoriteFood = (foodInfo, userId) => {
     let name = foodInfo.food.match(/[a-zA-z]/gi).join('')[0].toUpperCase() + foodInfo.food.match(/[a-zA-z]/gi).join('').slice(1)
-    let obj = {quantity: Number(foodInfo.food.match(/\d/gi)), name: name, user_id: userId, carb: foodInfo.carb, fats: foodInfo.fat, protein: foodInfo.protein, calories: foodInfo.calories};
+    let obj = {quantity: Number(foodInfo.food.match(/\d+/gi)), name: name, user_id: userId, carb: foodInfo.carb, fats: foodInfo.fat, protein: foodInfo.protein, calories: foodInfo.calories};
     return dispatch => {
         dispatch(sendFoodRedux(obj));
         axios({

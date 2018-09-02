@@ -38,8 +38,8 @@ const Styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginLeft: 30,
-        marginBottom: 30
+        // marginLeft: 30,
+        marginBottom: 20
     },
     homeProfilePictureBox: {
         flex: 1,
@@ -112,7 +112,7 @@ const Styles = StyleSheet.create({
     },
     ExerciseContentSmallPicker: {
         width: 50,
-        height: 88,
+        height: 60,
     },
     ExerciseContentTwoPickers: {
         width: 300,

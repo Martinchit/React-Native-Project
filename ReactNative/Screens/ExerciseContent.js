@@ -1,6 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Platform, Text, View, FlatList, Picker, Vibration } from 'react-native';
-import { Navigator } from 'react-native-navigation';
+import { Text, View, Picker, Vibration, DatePickerIOS, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import Button from 'apsl-react-native-button';
 import Styles from '../Style/Style';
@@ -14,8 +13,13 @@ class ExerciseContent extends React.Component {
             itemId: this.props.selectedItem.content[0].name,
             weight: 3,
             repetition: 5,
-            set: 3
+            set: 3,
+            chosenDate: new Date()
         };
+    }
+
+    onDateChangeHandler = (date) => {
+        this.setState({chosenDate: date})
     }
 
     render() {
@@ -95,6 +99,16 @@ class ExerciseContent extends React.Component {
                         </Picker>
                     </View>
                 </View>
+
+                <View style={{flex: 1, justifyContent: 'center', width: Dimensions.get("window").width, top: -Dimensions.get("window").width * 0.1}}>
+                    <DatePickerIOS
+                        date={this.state.chosenDate}
+                        onDateChange={this.onDateChangeHandler}
+                        minimumDate={new Date()}
+                        minuteInterval={5}
+                    />
+                </View>
+
                 <View style={Styles.ExerciseContentButtonList}>
                     <Button 
                         style={Styles.ExerciseContentBackButton} 
@@ -110,7 +124,8 @@ class ExerciseContent extends React.Component {
                         textStyle={{fontSize: 18}} 
                         onPress={() => {
                             Vibration.vibrate(1);
-                            this.props.addLog(this.state.itemId, this.state.weight, this.state.repetition, this.state.set)
+                            this.props.addLog(this.props.userId, this.state.itemId, this.state.weight, this.state.repetition, this.state.set, String(this.state.chosenDate))
+                            this.props.navigator.dismissModal()
                         }}
                     >
                         <Text style={{color: 'white'}}>Add</Text>
@@ -121,11 +136,17 @@ class ExerciseContent extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        userId: state.authReducer.userId
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-      addLog: (itemId, weight, rep, set) => dispatch(actions.addLog(itemId, weight, rep, set)),
+      addLog: (userId,itemId, weight, rep, set, chosenDate) => dispatch(actions.addLog(userId,itemId, weight, rep, set, chosenDate)),
     }
 }
   
 
-export default connect(null, mapDispatchToProps)(ExerciseContent);
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseContent);

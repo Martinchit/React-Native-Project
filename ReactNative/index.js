@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native';
 import Regcise from './App';
 
-// AppRegistry.registerComponent('Shawn', () => Regcise);
+console.disableYellowBox = true;
 
-Regcise.showApp()
+AppRegistry.registerComponent('Shawn', () => Regcise);

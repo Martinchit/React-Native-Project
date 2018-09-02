@@ -4,7 +4,6 @@ import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import 'whatwg-fetch';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/index';
-import { Navigatior } from 'react-native-navigation';
 
 class FBLoginButton extends React.Component {
 
@@ -24,8 +23,14 @@ class FBLoginButton extends React.Component {
     }
   }
 
+  loginSuccess = () => {
+    AccessToken.getCurrentAccessToken().then((data) => {
+      this.storeData(data.accessToken.toString())
+      this.initUser(data.accessToken.toString())
+    })
+  }
+
   initUser = (token) => {
-    this.storeData(token)
     fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' + token)
     .then((response) => response.json())
     .then((ref) => {
@@ -36,7 +41,7 @@ class FBLoginButton extends React.Component {
       obj.email = ref.email;
       obj.profilePicture = "http://graph.facebook.com/" + ref.id + "/picture?type=large&width=160&height=160";
       this.props.authSuccess(obj);
-    });
+    })
   }
   
   logout = () => {
@@ -51,6 +56,7 @@ class FBLoginButton extends React.Component {
       }
     });
   }
+
   render() {
     return (
       <View>
@@ -64,15 +70,11 @@ class FBLoginButton extends React.Component {
               } else if (result.isCancelled) {
                 alert("Login was cancelled");
               } else {
-                this.props.startTabAppAction;
-                AccessToken.getCurrentAccessToken().then((data) => {
-                    this.initUser(data.accessToken.toString())
-                  }
-                )
+                this.loginSuccess();
               }
             }
           }
-          onLogoutFinished={() => this.props.logoutAction()} />
+          onLogoutFinished={() => this.logout()} />
       </View>
     );
   }

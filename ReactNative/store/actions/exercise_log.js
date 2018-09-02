@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import axios from 'axios';
 
 export const clearLog = () => {
     return {
@@ -13,12 +14,27 @@ export const removeLog = (id) => {
     };
 };
 
-export const addLog = (exercise, weight, repetition, set) => {
+export const addLogToRedux = (exercise, weight, repetition, set, chosenDate) => {
     return {
         type: actionTypes.ADD_EXERCISE_LOG,
         exercise: exercise,
         weight: weight,
         repetition: repetition,
-        set: set
+        set: set,
+        chosenDate: chosenDate
     };
+}
+
+export const addLog = (userId, exercise, weight, repetition, set, chosenDate) => {
+    return dispatch => {
+        axios({
+            method: 'POST',
+            url: 'https://regcise.firebaseio.com/exerciseLog.json',
+            data: {userId, exercise, weight, repetition, set, chosenDate}
+        }).then((data) => {
+            dispatch(addLogToRedux(exercise, weight, repetition, set, chosenDate))
+        }).catch((err) => {
+            throw new Error(err)
+        })
+    }
 };

@@ -1,9 +1,7 @@
 import React from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity, TextProps, Picker, Vibration, Keyboard } from 'react-native';
-import FBLoginButton from '../Buttons/FBLoginButton';
+import { Text, View, Image, TouchableOpacity, Picker, Vibration, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import Styles from '../Style/Style';
-import { Navigator } from 'react-native-navigation';
 import axios from 'axios';
 import * as actions from '../store/actions/index';
 import Button from 'apsl-react-native-button';
@@ -153,7 +151,8 @@ const mapStateToProps = state => {
     loading: state.checkFoodReducer.loading,
     error: state.checkFoodReducer.loading,
     foods: state.checkFoodReducer.foods,
-    showItemInfo: state.checkFoodReducer.showItemInfo
+    showItemInfo: state.checkFoodReducer.showItemInfo,
+    userId: state.authReducer.userId
   }
 }
 

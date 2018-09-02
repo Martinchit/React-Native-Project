@@ -1,11 +1,6 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, ScrollView, TouchableHighlight, onLayout, ActionSheetIOS, Alert } from 'react-native';
-import FBLoginButton from '../Buttons/FBLoginButton';
-import { connect } from 'react-redux';
-import { Navigator } from 'react-native-navigation';
-import { SuperGridSectionList, GridView } from 'react-native-super-grid';
+import { View, StyleSheet, ActionSheetIOS, Alert } from 'react-native';
 import axios from 'axios';
-import ModalDropdown from 'react-native-modal-dropdown';
 import Swiper from './Swiper';
 
 class Home extends React.Component {
@@ -85,7 +80,6 @@ class Home extends React.Component {
   }
 
   render() {
-
     return (
       <View style={{flex: 1}} onLayout={(event) => {this.setState({height: event.nativeEvent.layout.height})}}>
         <View style={styles.container}>
